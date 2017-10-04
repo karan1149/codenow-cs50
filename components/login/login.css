@@ -1,0 +1,21 @@
+/* Use the # to specify an element by ID */
+#registerCard {
+	width: 60%;
+	margin: auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding: 30px;
+}
+
+#loginCard {
+	width: 60%;
+	margin: auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	padding: 30px;
+}
+
+/* Use the . to specify an element by class name. */
+.md-title, .md-subhead {
+	text-align: center;
+}

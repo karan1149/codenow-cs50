@@ -1,0 +1,7 @@
+/* Welcome message styling */
+#welcome {
+	text-align: center;
+	font-size: 20px;
+	font-weight: 600;
+	font-family: “Century Gothic”, CenturyGothic, AppleGothic, sans-serif;
+}

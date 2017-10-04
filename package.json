@@ -1,0 +1,27 @@
+{
+  "name": "CS50_Wireframe_Web_App",
+  "version": "1.0.0",
+  "description": "CS50 - Wireframe Web App using MEAN Stack. package.json lists all dependencies",
+  "main": "webServer.js",
+  "scripts": {
+    "test": "echo Test your code by opening http://localhost:3000 in your browser.",
+    "jshint": "./node_modules/.bin/jshint --config .jshintrc --exclude=node_modules --exclude=test . || exit 0"
+  },
+  "author": "CS50",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.9",
+    "angular-animate": "^1.4.9",
+    "angular-aria": "^1.4.9",
+    "angular-material": "^1.0.4",
+    "angular-resource": "^1.5.0",
+    "angular-route": "^1.4.9",
+    "async": "^1.5.0",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.3",
+    "express-session": "^1.13.0",
+    "jshint": "^2.9.1-rc2",
+    "mongoose": "^4.3.4",
+    "multer": "^1.1.0"
+  }
+}
