@@ -14,16 +14,16 @@
 
         <!-- Add in our controller script -->
         <script src="mainController.js"></script>
-        
+
         <!-- Load loginController and its CSS -->
         <script src="components/login/loginController.js"></script>
         <link rel="stylesheet" type="text/css" href="components/login/login.css" />
-        
+
         <!-- Added home view controller and css -->
         <script src="components/home/homeController.js"></script>
         <link rel="stylesheet" type="text/css" href="components/home/home.css" />
 
-        <script src="./node_modules/angular-resource/angular-resource.js"  type="text/javascript" ></script>        
+        <script src="./node_modules/angular-resource/angular-resource.js"  type="text/javascript" ></script>
     </head>
 
     <!-- The entire page is layed out as a vertical column, so elements in HTML are layered top to bottom-->
@@ -34,13 +34,13 @@
             <!-- Author, Version, Project -->
             <h3 style = "margin-left: 10px;">Fall 17</h3>
             <span flex></span>
-            
+
             <!-- Toolbar Title -->
             <h3 id = "toolbarTitle">CS50 Wireframe Application</h3>
             <span flex></span>
-            
+
             <!-- Logout Button Area -->
-            <h3 id = "logout"><md-button class="md-raised md-warn" ng-click="logoutClicked()">Logout</md-button></h3>
+            <h3 id = "logout"><md-button class="md-raised md-warn" ng-click="logoutClicked()">Log-out</md-button></h3>
         </md-toolbar>
 
         <!-- The next element is a div that utilizes ng-content to dynamically change what HTML it shows (refer to mainController.js line 6-20). -->
