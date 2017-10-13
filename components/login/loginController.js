@@ -10,7 +10,7 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
 
     // Set toolbar title
     var toolbarTitle = document.getElementById("toolbarTitle");
-    toolbarTitle.innerHTML = "Please Login to the App"; 
+    toolbarTitle.innerHTML = "Please Login to the App";
 
     // login name and password
     $scope.login_name;
