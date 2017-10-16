@@ -1,7 +1,7 @@
 <div id = "login">
 	<md-content layout = "column">
     	<div>
-    	
+
     		<!-- Login Card - the top card on /login used to log in users -->
     		<md-card id = "loginCard">
       			<md-card-header>
@@ -20,7 +20,7 @@
         			<label>Password</label>
         			<input ng-model=password>
       			</md-input-container>
-      		  
+
             <!-- Login Button -->
       			<md-input-container>
     					<div layout="row">
@@ -29,48 +29,58 @@
     				</md-input-container>
 			 </md-card>
     	</div>
-    	
+
     	<div>
       		<md-card id = "registerCard">
-    	
+
     		<!-- Register Card  - the bottom card on /login used to register new users -->
         	<md-card-header>
             	<md-card-header-text>
                 	<span class="md-title">Register A New Account!</span>
                 	<span class="md-subhead">Enter information below.</span>
             	</md-card-header-text>
-    
+
         	</md-card-header>
-    	
+
     		<!-- Input Fields -->
         	<md-card-content>
             	<div layout-gt-sm="column">
-          			
+
           			<md-input-container class="md-block" flex-gt-sm>
             			<label>Login Name</label>
             			<input ng-model="newLogin" ng-required = "true">
           			</md-input-container>
-          			
+
           			<md-input-container class="md-block" flex-gt-sm>
             			<label>Password</label>
             			<input ng-model="newPass" ng-required = "true">
           			</md-input-container>
-          			
+
           			<md-input-container class="md-block" flex-gt-sm>
             			<label>Confirm Password</label>
             			<input ng-model="confirmPass" ng-required = "true">
           			</md-input-container>
-          			
+
           			<md-input-container class="md-block" flex-gt-sm>
             			<label>First name</label>
             			<input ng-model="newFirst" ng-required = "true">
           			</md-input-container>
-          			
+
           			<md-input-container class="md-block" flex-gt-sm>
             			<label>Last Name</label>
             			<input ng-model="newLast" ng-required = "true">
           			</md-input-container>
-        			
+
+									<form name="memberForm">
+										<p> Choose Account Type: </p>
+										<div>
+		   								<label><input type="radio" name="test" ng-model="radioValue" value="Student"/> Student</label>
+										</div>
+										<div>
+		   								<label><input type="radio" name="test" ng-model="radioValue" value="Community"/> Community Member</label>
+										</div>
+									</form>
+
               <!-- Register Button -->
         			<md-button class="md-raised md-primary" ng-click="register()">Register Me</md-button>
         		</div>
