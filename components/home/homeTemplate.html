@@ -1,6 +1,27 @@
 <div style="text-align: center;">		<!-- You can add CSS style in HTML tags too! -->
-	<p id = "welcome">You are now logged in! Click the button to log out!</p>
-	<img src="../../images/empty_pic.jpg">
-	<p id = "Name">{{main.loggedInUser}}</p>
+	<p id = "welcome">Welcome {{main.loggedInUser}}</p>
+
+	<md-card id = "Projects">
+
+<!-- Input Fields -->
+
+	<md-card-header>
+		<md-card-header-text>
+				<span class="md-title">Project Name </span>
+				<span class="md-subhead">Description</span>
+		</md-card-header-text>
+
+	</md-card-header>
+
+	<md-card-content>
+			<div layout-gt-sm="column">
+				<span class="md-deadline">Deadline: </span>
+			<!-- Register Button -->
+			<md-button class="md-raised md-primary" ng-click="detailedPage()">Details</md-button>
+		</div>
+	</md-card-content>
+</md-card>
+
+
 	<p> Angular injects the logged in user's name above, as defined by the scope.main.loggedInUser variable</p>
 </div>

@@ -72,7 +72,8 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
 
                 // Alert successful registration
                 window.alert("Successfully registered! Logging In!");
-
+                // Set logged in user. Notice how the scope.main.loggedInUser variables can be used across different files!
+                $scope.main.loggedInUser = $scope.newFirst + " " + $scope.newLast;
                 // Upon successful registration, automatically log in the user.
                 var userRes = $resource("/admin/login");
 
