@@ -40,6 +40,7 @@ var fs = require("fs");
 // Load the Mongoose schema for User and Data Point (example)
 var User = require('./schema/user.js');
 var Data = require('./schema/data.js');
+var Project = require('./schema/project.js');
 
 // Load Express
 var express = require('express');
@@ -142,15 +143,102 @@ app.post('/admin/logout', function (request, response) {
 });
 
 /*
+ * Example #7 - Return the information for specified User (based on Login_Name)
+ * URL Parameter instead of request variable!
+ */
+app.get('/user/:login_name', function (request, response) {
+    var param = request.params.login_name;
+
+    // Search for single id and return user + relevant information
+    User.findOne({login_name: param}, 'first_name last_name', function (err, user) { 
+        if (!err) {
+            response.end(JSON.stringify(user));
+        } else {
+            response.status(400).send("Error");     
+        }
+    });
+});
+
+/*
+ * GET Request for all the projects
+ */
+app.get('/projects/list', function(request, response) {
+    Project.find(function (err, projects) {
+        projects = JSON.parse(JSON.stringify(projects));
+        response.status(200).send(JSON.stringify(projects));
+    });
+});
+
+/*
+ * GET Request for a specific project
+ */
+app.get('/projects/:id', function(request, response) {
+    var id = request.params.id;
+
+    Project.findOne({_id: id}, function (err, project) {
+        if (project === undefined) {
+            console.log('Project with _id:' + id + ' not found.');
+            response.status(400).send('Not found');
+            return;
+        }
+
+        project = JSON.parse(JSON.stringify(project));
+        response.status(200).send(JSON.stringify(project));
+    });
+});
+
+
+/*
+ * Example #5: POST Request creating new PROJECT
+ */
+app.post('/projects/new', function(request, response) {
+    var contact_info = request.body.contact_info // contact info of community member
+    var description = request.body.description  // description of the project
+    var community_member = request.body.community_member // community who created project
+    var tag = request.body.tag  // tag associated with the project
+    var title = request.body.tag // title of the project
+
+    if (contact_info === null) {
+        response.status(400).send("Contact Info Required!")
+    } else if (title === null) {
+        response.status(400).send("Title Required!")
+    } else if (community_member === null) {
+        response.status(400).send("Community Member Required!")
+    } else if (description === null) {
+        response.status(400).send("Description Required!")
+    }
+
+    Project.create({
+        contact_info: contact_info,
+        description: description,
+        community_member: community_member,
+        tag: tag,
+        title: title
+    }, function (err, projectObj) {
+        if (err) {
+            console.error('Error creating project', err);
+        } else {
+            // Set the unique ID of the project.
+            projectObj.save();
+            response.end("Project Created");
+        }
+    });
+
+    response.status(400).send("Error");
+});
+
+/*
  * Example #6: POST Request Creating New User (Account Creation Example)
  */
 app.post('/user', function(request, response) {
 
 	// Get body parameters
+    var user_type = request.body.user_type;
 	var login_name = request.body.login_name;
 	var password = request.body.password;
 	var first_name = request.body.first_name;
 	var last_name = request.body.last_name;
+    var email = request.body.email;
 	
 	// Check if login credentials already exist
 	User.findOne({login_name: login_name}, function (err, user) { 
@@ -158,9 +246,11 @@ app.post('/user', function(request, response) {
 		// If no User with login_name exists yet and no Error, create new User
     	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null) {
     		User.create({
+                user_type: user_type,
             	first_name: first_name,
             	last_name: last_name,
             	login_name: login_name,
+                email: email,
             	password: password
         	}, function (err, userObj) {
             	if (err) {
@@ -182,8 +272,12 @@ app.post('/user', function(request, response) {
     	} else if (first_name === null) {
 			response.status(400).send("First Name Required!");    	
     	} else if (last_name === null) {
-			response.status(400).send("Last Name Required!");    		
-    	} else {
+			response.status(400).send("Last Name Required!");   
+        } else if (email === null) {
+            response.status(400).send("Email Required!")		
+    	} else if (user_type === null) {
+            response.status(400).send("User Type Required!");
+        } else {
     		response.status(400).send("Error!");
     	}
     });

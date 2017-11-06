@@ -11,18 +11,18 @@ var mongoose = require('mongoose');
 
 // create a schema
 // NOTE: All documents (instances) in a Mongoose schema also have a _id field by default!
-var userSchema = new mongoose.Schema({
-	user_type: String, // Whether the user is a community member, student, or admin
-    first_name: String, // First name of the user.
-    last_name: String,  // Last name of the user.
-    login_name: String,		// login_name of the user.
-    email: String,			// email of the user
-    password: String		// password of the user.
+var projectSchema = new mongoose.Schema({
+	contact_info: String, // contact info of community member
+	student: String, // student who has accepted the project
+	description: String,  // description of the project
+	community_member: String,  // community who created project
+	tag: String,  // tag associated with the project
+	title: String // title of the project
 });
 
 // the schema is useless so far
 // we need to create a model using it
-var User = mongoose.model('User', userSchema);
+var Project = mongoose.model('Project', projectSchema);
 
 // make this available to our users in our Node applications
-module.exports = User;
+module.exports = Project;
