@@ -8,44 +8,6 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
      * $routeParams  should have the userId property set with the path from the URL.
      */
 
-    // Set toolbar title
-    var toolbarTitle = document.getElementById("toolbarTitle");
-    toolbarTitle.innerHTML = "Please Login to the App";
-
-    // login name and password
-    $scope.login_name;
-    $scope.password;
-
-    // Grab the logout button by searching for it by its Id.
-    $scope.logout = document.getElementById("logout");
-    $scope.logout.style.visibility = "hidden";      // Hide it initially
-
-    // Run Login and validate upon user clicking Login Button
-    $scope.loginClick = function() {
-
-        // POST REQUEST using $resource.
-        var userRes = $resource("/admin/login");
-        userRes.save({login_name: $scope.login_name, password: $scope.password}, function (model) {
-
-            // Signal that user is successfully logging in
-            $scope.loggingIn();
-
-            // Set window location
-            var next = "#/users/" + model.id;
-            window.location = next;
-
-            // Set logged in user. Notice how the scope.main.loggedInUser variables can be used across different files!
-            $scope.main.loggedInUser = model.first_name + " " + model.last_name;
-
-            // Set visibility of "Logout" Button
-            $scope.logout.style.visibility = "visible";
-        }, function errorHandling(err) {
-
-            // window.alert will show a popup containing text.
-            window.alert(err.data);
-        });
-    };
-
     // We use Scope Variables so that Angular can update these for us as the user is typing in them. See loginTemplate.html
     $scope.newLogin;
     $scope.newPass;
