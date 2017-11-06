@@ -18,6 +18,10 @@ cs50App.config(['$routeProvider',
                 templateUrl: 'components/login/loginTemplate.html',
                 controller: 'LoginController'
             }).
+            when('/signup', {
+            templateUrl: 'components/signup/signupTemplate.html',
+            controller: 'signupController'
+             }).
             otherwise({
                 redirectTo: '/home'
             });
@@ -35,7 +39,7 @@ cs50App.controller('MainController', ['$scope', '$rootScope', '$location', '$htt
         $rootScope.$on( "$routeChangeStart", function(event, next, current) {
         	if (!$scope.loggedIn) {
          	    // no logged user, redirect to /login unless already there
-        		if (next.templateUrl !== "components/login/loginTemplate.html") {
+        		if (next.templateUrl !== "components/login/loginTemplate.html" && next.templateUrl !== "components/signup/signupTemplate.html" ) {
             		$location.path("/login");
         		}
       		}
