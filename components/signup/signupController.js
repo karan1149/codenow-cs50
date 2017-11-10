@@ -70,6 +70,8 @@ cs50App.controller('signupController', ['$scope', '$rootScope', '$routeParams', 
                 userRes.save({login_name: $scope.newLogin, password: $scope.newPass, first_name: $scope.newFirst,
                     last_name: $scope.newLast}, function (model) {
 
+                    $scope.main.loggedInUser = $scope.newFirst + " " + $scope.newLast;
+
                     // Alert successful registration
                     window.alert("Successfully registered! Logging In!");
 

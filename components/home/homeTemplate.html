@@ -1,4 +1,4 @@
-<div style="text-align: center;">		<!-- You can add CSS style in HTML tags too! -->
+<div style="text-align: center;">
 	<p id = "welcome">Welcome {{main.loggedInUser}}</p>
 
 	<md-card id = "Projects">
@@ -16,12 +16,10 @@
 	<md-card-content>
 			<div layout-gt-sm="column">
 				<span class="md-deadline">Deadline: </span>
-			<!-- Register Button -->
+			<!-- Details Button -->
 			<md-button class="md-raised md-primary" ng-click="detailedPage()">Details</md-button>
 		</div>
 	</md-card-content>
 </md-card>
 
-
-	<p> Angular injects the logged in user's name above, as defined by the scope.main.loggedInUser variable</p>
 </div>
