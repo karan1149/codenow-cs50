@@ -170,7 +170,8 @@ app.get('/projects/list', function(request, response) {
 });
 
 /*
- * GET Request for a specific project
+ * GET: Request for a specific project by id
+ * example would be /projects/1234
  */
 app.get('/projects/:id', function(request, response) {
     var id = request.params.id;
@@ -189,14 +190,15 @@ app.get('/projects/:id', function(request, response) {
 
 
 /*
- * Example #5: POST Request creating new PROJECT
+ * POST: Request creating new PROJECT
+ * body of request should contain contact_info, description, community_member, tag, title
  */
 app.post('/projects/new', function(request, response) {
     var contact_info = request.body.contact_info // contact info of community member
     var description = request.body.description  // description of the project
     var community_member = request.body.community_member // community who created project
     var tag = request.body.tag  // tag associated with the project
-    var title = request.body.tag // title of the project
+    var title = request.body.title // title of the project
 
     if (contact_info === null) {
         response.status(400).send("Contact Info Required!")
@@ -213,7 +215,8 @@ app.post('/projects/new', function(request, response) {
         description: description,
         community_member: community_member,
         tag: tag,
-        title: title
+        title: title,
+        reviewed: false
     }, function (err, projectObj) {
         if (err) {
             console.error('Error creating project', err);
@@ -228,7 +231,8 @@ app.post('/projects/new', function(request, response) {
 });
 
 /*
- * Example #6: POST Request Creating New User (Account Creation Example)
+ * POST: Request Creating New User (Account Creation Example)
+ * Request contains user_type, login_name, password, first_name, last_name, email
  */
 app.post('/user', function(request, response) {
 

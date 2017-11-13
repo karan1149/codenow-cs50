@@ -17,7 +17,8 @@ var projectSchema = new mongoose.Schema({
 	description: String,  // description of the project
 	community_member: String,  // community who created project
 	tag: String,  // tag associated with the project
-	title: String // title of the project
+	title: String, // title of the project
+	reviewed: Boolean // if the project has been reviewed by the admins
 });
 
 // the schema is useless so far
