@@ -16,6 +16,6 @@
 }
 
 /* Use the . to specify an element by class name. */
-.md-title, .md-subhead {
+.md-title, .md-subhead .md-signup {
 	text-align: center;
 }
