@@ -18,6 +18,10 @@ cs50App.config(['$routeProvider',
                 templateUrl: 'components/login/loginTemplate.html',
                 controller: 'LoginController'
             }).
+            when('/projects/new', {
+                templateUrl: 'components/submit/submit.html',
+                controller: 'SubmitController'
+            }).
             when('/signup', {
             templateUrl: 'components/signup/signupTemplate.html',
             controller: 'signupController'
@@ -32,9 +36,9 @@ cs50App.config(['$routeProvider',
  */
 cs50App.controller('MainController', ['$scope', '$rootScope', '$location', '$http', '$routeParams', '$resource', '$mdDialog', '$mdMedia',
     function ($scope, $rootScope, $location, $http, $routeParams, $resource, $mdDialog, $mdMedia) {
-        
+
         $scope.loggedIn;	// Boolean to keep track if user is logged in.
-        
+
         // the $rootScope injection helps us determine if a certain event has occurred that altered the route
         $rootScope.$on( "$routeChangeStart", function(event, next, current) {
         	if (!$scope.loggedIn) {
@@ -44,12 +48,12 @@ cs50App.controller('MainController', ['$scope', '$rootScope', '$location', '$htt
         		}
       		}
    		});
-   		
+
    		// $scope variables are accessible in any other Angular controller with the $scope injection. Also accessible in the HTML controlled by the Controller
         $scope.main = {};
         $scope.main.loggedInUser = "User Name"
         $scope.logout = document.getElementById("logout");
- 		
+
  		// Upon logout, communicate with server to logout/destroy session and manage view
  		$scope.logoutClicked = function(){
     		$scope.userReq = $resource('/admin/logout');
@@ -58,15 +62,14 @@ cs50App.controller('MainController', ['$scope', '$rootScope', '$location', '$htt
       			window.location = "#/login";
       			$scope.logout.style.visibility = "hidden";
       			$rootScope.$broadcast('LoggedOut');
-			}, function errorHandling(err) { 
+			}, function errorHandling(err) {
 				console.log("INVALID LOGIN");
 			});
  		};
- 		
+
  		// When logging in, we set the loggedIn bool to true and signal to all other apps.
  		$scope.loggingIn = function() {
  			$scope.loggedIn = true;
  			$rootScope.$broadcast('LoggedIn');
- 		};		
+ 		};
     }]);
-

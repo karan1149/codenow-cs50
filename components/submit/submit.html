@@ -1,0 +1,48 @@
+<md-content layout = "column">
+    <div>
+        <md-card id = "submitCard">
+
+            <!-- Submit Card  - the card to submit a new Project-->
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-title">Submit A New Project!</span>
+                    <span class="md-subhead">Enter information below.</span>
+                </md-card-header-text>
+            </md-card-header>
+
+            <!-- Input Fields -->
+            <md-card-content>
+                <div layout-gt-sm="column">
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Community Member</label>
+                        <input ng-model="community_member" ng-required = "true">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Title</label>
+                        <input ng-model="title" ng-required = "true">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Description</label>
+                        <input ng-model="description" ng-required = "true">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Contact Info</label>
+                        <input ng-model="contact_info" ng-required = "true">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Tags (e.g. Android app, simple website)</label>
+                        <input ng-model="tag" ng-required = "true">
+                    </md-input-container>
+
+                    <!-- Submit project  -->
+                    <md-button class="md-raised md-primary" ng-click="submitClick()">Submit</md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</md-content>
