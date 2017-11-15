@@ -29,8 +29,10 @@ cs50App.controller('SubmitController', ['$scope', '$rootScope', '$routeParams', 
 
                 // Post - /user
                 var userRes = $resource("/projects/new");
-                userRes.save({contact_info: $scope.contact_info, description: $scope.description, community_member: $scope.community_member,
-                    tag: $scope.tag, title: $scope.title}, function (model) {
+                var obj = {contact_info: $scope.contact_info, description: $scope.description, community_member: $scope.community_member,
+                    tag: $scope.tag, title: $scope.title};
+                console.log(obj)
+                userRes.save(obj, function (data, headers, status) {
 
 
                     // Alert successful submission

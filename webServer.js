@@ -194,19 +194,19 @@ app.get('/projects/:id', function(request, response) {
  * body of request should contain contact_info, description, community_member, tag, title
  */
 app.post('/projects/new', function(request, response) {
-    var contact_info = request.body.contact_info // contact info of community member
-    var description = request.body.description  // description of the project
-    var community_member = request.body.community_member // community who created project
-    var tag = request.body.tag  // tag associated with the project
-    var title = request.body.title // title of the project
+    var contact_info = request.body.contact_info; // contact info of community member
+    var description = request.body.description;  // description of the project
+    var community_member = request.body.community_member; // community who created project
+    var tag = request.body.tag ; // tag associated with the project
+    var title = request.body.title; // title of the project
     if (contact_info === null) {
-        response.status(400).send("Contact Info Required!")
+        response.status(400).send("Contact Info Required!");
     } else if (title === null) {
-        response.status(400).send("Title Required!")
+        response.status(400).send("Title Required!");
     } else if (community_member === null) {
-        response.status(400).send("Community Member Required!")
+        response.status(400).send("Community Member Required!");
     } else if (description === null) {
-        response.status(400).send("Description Required!")
+        response.status(400).send("Description Required!");
     }
 
     Project.create({
@@ -219,6 +219,7 @@ app.post('/projects/new', function(request, response) {
     }, function (err, projectObj) {
         if (err) {
             console.error('Error creating project', err);
+            response.status(400).send(err)
         } else {
             // Set the unique ID of the project.
             projectObj.save();
@@ -226,7 +227,6 @@ app.post('/projects/new', function(request, response) {
         }
     });
 
-    response.status(400).send("Error");
 });
 
 /*
