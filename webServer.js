@@ -113,6 +113,7 @@ app.post('/admin/login', function (request, response) {
 		// If found and valid password, set to current session.
     	if (!err && user !== null && password === user.password) {
     		request.session.login_name = user.login_name;
+            response.session._id = user._id;
     		response.status(200).end(JSON.stringify(user));
     	// Error handling
     	} else if (user === null) {
@@ -131,6 +132,7 @@ app.post('/admin/login', function (request, response) {
 app.post('/admin/logout', function (request, response) {
 	// delete attributes of session
     delete request.session.login_name;
+    delete request.session._id;
 
     // DESTROY EVERYTHINGGGGGGG
     request.session.destroy(function (err) {
@@ -165,7 +167,7 @@ app.get('/user/:login_name', function (request, response) {
 app.get('/projects/list', function(request, response) {
     Project.find(function (err, projects) {
         projects = JSON.parse(JSON.stringify(projects));
-        response.status(200).send(JSON.stringify(projects));
+        response.status(200).send(projects);
     });
 });
 
@@ -174,6 +176,11 @@ app.get('/projects/list', function(request, response) {
  * example would be /projects/1234
  */
 app.get('/projects/:id', function(request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
     var id = request.params.id;
 
     Project.findOne({_id: id}, function (err, project) {
@@ -183,22 +190,33 @@ app.get('/projects/:id', function(request, response) {
             return;
         }
 
-        project = JSON.parse(JSON.stringify(project));
-        response.status(200).send(JSON.stringify(project));
+        if (err) {
+            response.status(400).send(err);
+            return;
+        }
+
+        response.status(200).send(project);
     });
 });
 
 
 /*
  * POST: Request creating new PROJECT
- * body of request should contain contact_info, description, community_member, tag, title
+ *  - Body of request should contain contact_info, 
+ *      description, community_member, tag, title
  */
 app.post('/projects/new', function(request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
     var contact_info = request.body.contact_info; // contact info of community member
     var description = request.body.description;  // description of the project
     var community_member = request.body.community_member; // community who created project
     var tag = request.body.tag ; // tag associated with the project
     var title = request.body.title; // title of the project
+
     if (contact_info === null) {
         response.status(400).send("Contact Info Required!");
     } else if (title === null) {
@@ -302,6 +320,74 @@ app.get('/user/:login_name', function (request, response) {
 		}
 	});
 });
+
+/*
+ * POST request to set the reviewed status of a project
+ *  - Param "id" should be the mongo id of the project
+ *  - Body of the request should include a boolean "reviewed" value
+ */
+ app.post('/projects/:id/update', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    User.findOne({_id: _id}, function (err, user) {
+        if (err) {
+            response.status(400).send("Error");
+            return;
+        }
+
+        if (user.user_type !== "admin") {
+            console.log(user.login_name + " is not an admin");
+            response.status(400).send(user.login_name + " is not an admin");
+            return;
+        }
+
+        var id = request.params.id; // project id in mongo
+        var reviewed= request.body.reviewed; // rewiewed status of project
+        var contact_info = request.body.contact_info; // contact info of community member
+        var description = request.body.description;  // description of the project
+        var community_member = request.body.community_member; // community who created project
+        var tag = request.body.tag ; // tag associated with the project
+        var title = request.body.title; // title of the project
+
+        // check that all fields are filled out
+        if (contact_info === null) {
+            response.status(400).send("Contact Info Required!");
+        } else if (title === null) {
+            response.status(400).send("Title Required!");
+        } else if (community_member === null) {
+            response.status(400).send("Community Member Required!");
+        } else if (description === null) {
+            response.status(400).send("Description Required!");
+        } else if (reviewed === null) {
+            response.status(400).send("Reviewed Required!");
+        }
+
+        // find the project
+        Project.findOne({_id: id}, function (err, project) {
+            if (project === undefined) {
+                console.log("Project with _id: " + id + " not found.");
+                response.status(400).send("Project " + id + " not found");
+                return;
+            }
+
+            // update the project
+            project.reviewed = reviewed;
+            project.contact_info = contact_info;
+            project.tag = tag;
+            project.community_member = community_member;
+            project.description = description;
+            project.title = title;
+
+            project.save();
+
+            response.status(200).send();
+        });
+    });
+ });
+
 
 
 // DO NOT DELETE: Opens port for loading your webserver locally

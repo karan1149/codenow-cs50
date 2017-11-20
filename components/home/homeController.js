@@ -5,8 +5,7 @@ cs50App.controller('HomeController', ['$scope','$routeParams','$resource',
   function ($scope, $routeParams,$resource) {
     var toolbarTitle = document.getElementById("toolbarTitle");
     toolbarTitle.innerHTML = "Home Page";
-<<<<<<< Updated upstream
-=======
+
     var resource = $resource('/projects/list');
     resource.query(function(payload){
       $scope.projectList = payload
@@ -17,5 +16,4 @@ cs50App.controller('HomeController', ['$scope','$routeParams','$resource',
       // tag: String,  // tag associated with the project
       // title: String // title of the project
     });
->>>>>>> Stashed changes
 }]);
