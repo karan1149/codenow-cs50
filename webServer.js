@@ -107,13 +107,12 @@ app.post('/admin/login', function (request, response) {
 	// Get login_name and password
     var userName = request.body.login_name;
     var password = request.body.password;
-
     // Search for matching login_name, then compare Users.
     User.findOne({login_name: userName}, function (err, user) {
 		// If found and valid password, set to current session.
     	if (!err && user !== null && password === user.password) {
     		request.session.login_name = user.login_name;
-            response.session._id = user._id;
+            request.session._id = user._id;
     		response.status(200).end(JSON.stringify(user));
     	// Error handling
     	} else if (user === null) {

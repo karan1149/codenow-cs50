@@ -5,7 +5,6 @@ cs50App.controller('HomeController', ['$scope','$routeParams','$resource',
   function ($scope, $routeParams,$resource) {
     var toolbarTitle = document.getElementById("toolbarTitle");
     toolbarTitle.innerHTML = "Home Page";
-
     var resource = $resource('/projects/list');
     resource.query(function(payload){
       $scope.projectList = payload
