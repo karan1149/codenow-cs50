@@ -24,4 +24,14 @@ cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
   reviewed: Boolean // if the project has been reviewed by the admins
 
   */
+
+  // todo: need a function to check if the user is admin so as to decide whether or not to display the form to accept/reject proposal
+  /*
+  $scope.isAdmin = function() {
+    if (//check if the logged in user is an admin)
+      return true;
+    else
+      return false;
+    };
+    */
 }]);
