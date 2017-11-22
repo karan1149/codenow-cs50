@@ -34,4 +34,13 @@ cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
       return false;
     };
     */
+  //right now, just returning false so that the form doesn't appear
+  $scope.isAdmin = function() {
+    return false;
+  }
+  
+  // todo: POST REQUEST NEEDED to submit the fact that project is reviewed/not reviewed
+  $scope.submitProposal = function() {
+  };
+
 }]);
