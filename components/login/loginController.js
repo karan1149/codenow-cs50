@@ -8,17 +8,16 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
      * $routeParams  should have the userId property set with the path from the URL.
      */
 
-    // Set toolbar title
-    
-    var toolbarTitle = document.getElementById("toolbarTitle");
-    toolbarTitle.innerHTML = "Please Login to the App";
+    // Set toolbar title TODO:Remove this.
+    // var toolbarTitle = document.getElementById("toolbarTitle");
+    // toolbarTitle.innerHTML = "Please Login to the App";
 
     // login name and password
     $scope.login_name;
     $scope.password;
 
-    // Grab the logout button by searching for it by its Id.
-    $scope.logout = document.getElementById("logout");
+    // Grab the logout button by searching for it by its Id. TODO: Uncomment this.
+    $scope.logout = document.querySelector(".toolbar");
     $scope.logout.style.visibility = "hidden";      // Hide it initially
 
     // Run Login and validate upon user clicking Login Button
@@ -30,9 +29,10 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
 
             // Signal that user is successfully logging in
             $scope.loggingIn();
+            console.log(model)
 
             // Set window location
-            var next = "#/users/" + model.id;
+            var next = "#/users/" + model._id;
             window.location = next;
 
             // Set logged in user. Notice how the scope.main.loggedInUser variables can be used across different files!

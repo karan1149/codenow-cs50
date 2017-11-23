@@ -1,30 +1,29 @@
-<div style="text-align: center;">
-	<p id = "welcome">Welcome {{main.loggedInUser}}</p>
 
-	<md-card id = "Projects">
 
-<!-- Input Fields -->
-
-	<md-card-header>
-		<md-card-header-text>
-				<span class="md-title">Project Name </span>
-				<span class="md-subhead">Description</span>
-		</md-card-header-text>
-
-	</md-card-header>
-
-	<md-card-content>
-		<md-list-item ng-repeat="project in projectList">
-			<div layout-gt-sm="column">
-				<span class="md-deadline">Name:{{project.name}} </span>
-				<span class="md-deadline">Description:{{project.description}} </span>
-				<md-button class="md-raised md-primary" ng-click="detailedPage()">Details</md-button>
+<!--<div className="flexGrowColumn relative">-->
+	<div class="codeNowTitle">
+		<img class= "codenowlogo" src ='../../images/codenow%20logo%20large.png' />
+	</div>
+	<div class="navRow">
+			<a class="submit NavButtons" ng-href="#!/projects/new">submit</a>
+			<a class="projects NavButtons" ng-href="#/home">projects</a>
+	</div>
+	<div class="projectsBot scrollable">
+		<div class="project" ng-repeat="project in projectList">
+				<div class="projRow">
+					<span class="md-deadline ellipsis">{{project.title}} </span>
+					<span class="subdate">18/11/2017</span>
+				</div>
+				<span class="descriptionTag ellipsis">Description: {{project.description}} </span>
+				<div class="projRow">
+					<span class="tag ellipsis">{{project.tag}} </span>
+					<div class="dateWrapper">
+						<span class="duedate">Due</span>
+						<div class="actualDate">23/11/17</div>
+					</div>
+				</div>
+				<!--<md-button class="md-raised md-primary" ng-click="detailedPage()">Details</md-button>-->
 		</div>
-		</md-list-item>
-		</div>
-	</md-card-content>
-</md-card>
+	</div>
 
-<!-- New Project Button -->
-	<md-button class="md-raised md-primary" ng-href="#!/projects/new">New Project</md-button>
-</div>
+<!--</div>-->

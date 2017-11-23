@@ -163,7 +163,7 @@ app.get('/user/:login_name', function (request, response) {
 /*
  * GET Request for all the projects
  */
-app.get('/projects/list', function(request, response) {
+app.get('/projectlist/', function(request, response) {
     Project.find(function (err, projects) {
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);

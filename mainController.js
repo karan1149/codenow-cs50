@@ -56,7 +56,7 @@ cs50App.controller('MainController', ['$scope', '$rootScope', '$location', '$htt
    		// $scope variables are accessible in any other Angular controller with the $scope injection. Also accessible in the HTML controlled by the Controller
         $scope.main = {};
         $scope.main.loggedInUser = "User Name"
-        $scope.logout = document.getElementById("logout");
+        $scope.logout = document.querySelector('.toolbar')
 
  		// Upon logout, communicate with server to logout/destroy session and manage view
  		$scope.logoutClicked = function(){

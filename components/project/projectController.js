@@ -1,13 +1,14 @@
 'use strict';
 
 /* Home view controller. Adjust welcome message and toolbar title */
-cs50App.controller('HomeController', ['$scope','$routeParams','$resource',
+cs50App.controller('projectController', ['$scope','$routeParams','$resource',
   function ($scope, $routeParams,$resource) {
     var toolbarTitle = document.getElementById("toolbarTitle");
     toolbarTitle.innerHTML = "Project Page";
 
     var projectId = $routeParams.projectId;
-
+    console.log($routeParams)
+    console.log('What is this?');
     var resource = $resource('/projects/' + projectId);
     resource.get({}, function(model){
       $scope.project = model;
