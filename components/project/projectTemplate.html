@@ -1,17 +1,48 @@
 <div style="text-align: center;">
 	<p id = "welcome">Welcome {{main.loggedInUser}}</p>
-
-
-<!-- Input Fields -->
-	<span class="md-title">Project Name </span>
-	<span>{{project.title}}</span>
-
-	<span class="md-subhead">Description</span>
-	<span>{{project.description}}</span>
-
-	<span>{{project.contact_info}}</span>
-	<span>{{project.student}}</span>
-	<span>{{project.community_member}}</span>
-	<span>{{project.tag}}</span>
-	<span>{{project.reviewed}}</span>
 </div>
+
+<md-content layout = "column">
+    <div>
+        <md-card id = "detailCard">
+
+            <!-- Submit Card  - the card to submit a new Project-->
+            <md-card-header>
+                <md-card-header-text>
+										<span class="md-title">Project Name </span>
+										<span>{{project.title}}</span>
+
+                </md-card-header-text>
+            </md-card-header>
+
+            <!-- Input Fields -->
+            <md-card-content>
+                <div layout-gt-sm="column">
+									<span class="md-subhead">Description</span>
+                	<span>{{project.description}}</span>
+
+                	<span>{{project.contact_info}}</span>
+                	<span>{{project.student}}</span>
+                	<span>{{project.community_member}}</span>
+                	<span>{{project.tag}}</span>
+                	<span>{{project.reviewed}}</span>
+
+										<div class ="submitForm" ng-show="isAdmin()">
+											<form name="proposalForm">
+	                        <p> Accept/Reject Project </p>
+	                        <div>
+	                            <label><input type="radio" name="test" ng-model="radioValue" value="accept"/> Accept Proposal</label>
+	                        </div>
+	                        <div>
+	                            <label><input type="radio" name="test" ng-model="radioValue" value="reject"/> Reject Proposal</label>
+	                        </div>
+	                    </form>
+	                    <!-- Submit reviews  -->
+	                    <md-button class="md-raised md-primary" ng-click="submitProposal()">Submit</md-button>
+										</div>
+
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</md-content>
