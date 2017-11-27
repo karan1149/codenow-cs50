@@ -4,6 +4,7 @@
   "description": "CS50 - Wireframe Web App using MEAN Stack. package.json lists all dependencies",
   "main": "webServer.js",
   "scripts": {
+    "start": "node webServer.js",
     "test": "echo Test your code by opening http://localhost:3000 in your browser.",
     "jshint": "./node_modules/.bin/jshint --config .jshintrc --exclude=node_modules --exclude=test . || exit 0"
   },
