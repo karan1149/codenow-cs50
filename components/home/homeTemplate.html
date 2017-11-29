@@ -10,6 +10,7 @@
 	</div>
 	<div class="projectsBot scrollable">
 		<div class="project" ng-repeat="project in projectList">
+			<a ng-href="#!/project/{{project._id}}">
 				<div class="projRow">
 					<span class="md-deadline ellipsis">{{project.title}} </span>
 					<span class="subdate">18/11/2017</span>
@@ -22,6 +23,7 @@
 						<div class="actualDate">23/11/17</div>
 					</div>
 				</div>
+			</a>
 				<!--<md-button class="md-raised md-primary" ng-click="detailedPage()">Details</md-button>-->
 		</div>
 	</div>

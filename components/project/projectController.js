@@ -3,12 +3,8 @@
 /* Home view controller. Adjust welcome message and toolbar title */
 cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
   function ($scope, $routeParams,$resource) {
-    var toolbarTitle = document.getElementById("toolbarTitle");
-    toolbarTitle.innerHTML = "Project Page";
 
     var projectId = $routeParams.projectId;
-    console.log($routeParams)
-    console.log('What is this?');
     var resource = $resource('/projects/' + projectId);
     resource.get({}, function(model){
       $scope.project = model;
