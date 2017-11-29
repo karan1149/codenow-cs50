@@ -165,6 +165,22 @@ app.get('/user/:login_name', function (request, response) {
  */
 app.get('/projectlist/', function(request, response) {
     Project.find(function (err, projects) {
+        if (err){
+            response.status(400).send(err)
+        }
+        projects = JSON.parse(JSON.stringify(projects));
+        response.status(200).send(projects);
+    });
+});
+
+/*
+ * GET Request for all unreviewed projects
+ */
+app.get('/projectsreview/', function(request, response) {
+    Project.find({reviewed: false}function (err, projects) {
+        if (err){
+            response.status(400).send(err)
+        }
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);
     });
