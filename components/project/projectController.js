@@ -1,11 +1,7 @@
 'use strict';
 
 /* Home view controller. Adjust welcome message and toolbar title */
-<<<<<<< HEAD
-cs50App.controller('projectController', ['$scope','$routeParams','$resource',
-=======
 cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
->>>>>>> 9d16e60d3319fec48dc2b03c893732d6d8c16a38
   function ($scope, $routeParams,$resource) {
     var toolbarTitle = document.getElementById("toolbarTitle");
     toolbarTitle.innerHTML = "Project Page";
