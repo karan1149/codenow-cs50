@@ -50,8 +50,8 @@ app.use(session({secret: 'secretKey', resave: false, saveUninitialized: false}))
 app.use(bodyParser.json());
 
 // Connect to the CS50Project Mongo Database
-mongoose.connect('mongodb://localhost/CS50Project');
-
+// mongoose.connect('mongodb://localhost/CS50Project');
+mongoose.connect('mongodb://code-now-user:codenow@ds121896.mlab.com:21896/heroku_c2f6v1db');
 // We have the express static module (http://expressjs.com/en/starter/static-files.html) do all
 // the work for us. This EXPORTS your current working directory that webServer.js is in. (__dirname)
 app.use(express.static(__dirname));
@@ -406,7 +406,7 @@ app.get('/user/:login_name', function (request, response) {
 
 
 // DO NOT DELETE: Opens port for loading your webserver locally
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT || 3000, function () {
     var port = server.address().port;
     console.log('Listening at http://localhost:' + port + ' exporting the directory ' + __dirname);
 });
