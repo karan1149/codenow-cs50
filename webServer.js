@@ -166,13 +166,44 @@ app.get('/user/:login_name', function (request, response) {
 app.get('/projectlist/', function(request, response) {
     Project.find(function (err, projects) {
         if (err){
-            response.status(400).send(err)
+            response.status(400).send(err);
         }
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);
     });
 });
 
+/*
+ * POST Request for a user to like  and unlike a project
+ */
+app.post('/project/:id/like', function(request,response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    var user_id = request.session._id
+    var project_id = request.params.id;
+
+    Project.findOne({_id: project_id}, function (err, project) {
+        if (err) {
+            response.status(400).send(err);
+            return;
+        }
+
+        if (project.liked_students.includes(user_id)) {
+            project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+            project.save();
+
+            response.status(200).send('Like');
+        } else {
+            project.liked_students.push(user_id);
+            project.save();
+
+            response.status(200).send('Unlike');
+        }
+    });
+});
 
 
 /*
@@ -199,7 +230,7 @@ app.get('/underReview/', function(request, response) {
 
         Project.find({reviewed: false}, function (err, projects) {
             if (err){
-                response.status(400).send(err)
+                response.status(400).send(err);
             }
 
             projects = JSON.parse(JSON.stringify(projects));

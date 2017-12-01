@@ -10,6 +10,17 @@ cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
       $scope.project = model;
     });
 
+
+    // use in html with something like '<button ng-click="like()">Like or unlike</button>'
+    $scope.like = function() {
+      var likeResource = $resource('/project/' + projectId + '/like');
+      resource.save({}, function(like_message){
+        console.log(like_message); // this will either by 'Like' or 'Unlike'
+      });
+    }
+
+
+
 /* project will have the following attributes:
 
   contact_info: String, // contact info of community member
