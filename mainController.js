@@ -30,6 +30,10 @@ cs50App.config(['$routeProvider',
                 templateUrl: 'components/project/projectTemplate.html',
                 controller: 'ProjectController'
             }).
+            when('/review', {
+                templateUrl: 'components/underReview/underReviewTemplate.html',
+                controller: 'UnderReviewController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

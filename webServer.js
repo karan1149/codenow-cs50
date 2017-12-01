@@ -176,13 +176,33 @@ app.get('/projectlist/', function(request, response) {
 /*
  * GET Request for all unreviewed projects
  */
-app.get('/projectsreview/', function(request, response) {
-    Project.find({reviewed: false}function (err, projects) {
-        if (err){
-            response.status(400).send(err)
+app.get('/underReview/', function(request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    User.findOne({_id: request.session._id}, function (err, user) {
+        console.log(user)
+        if (err) {
+            response.status(400).send(err);
+            return;
         }
-        projects = JSON.parse(JSON.stringify(projects));
-        response.status(200).send(projects);
+
+        if (user.user_type !== "Admin") {
+            console.log(user.login_name + " is not an admin");
+            response.status(400).send(user.login_name + " is not an admin");
+            return;
+        }
+
+        Project.find({reviewed: false}, function (err, projects) {
+            if (err){
+                response.status(400).send(err)
+            }
+
+            projects = JSON.parse(JSON.stringify(projects));
+            response.status(200).send(projects);
+        });
     });
 });
 
@@ -280,7 +300,7 @@ app.post('/user', function(request, response) {
 	User.findOne({login_name: login_name}, function (err, user) {
 
 		// If no User with login_name exists yet and no Error, create new User
-    	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null) {
+    	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null && user_type !== null) {
     		User.create({
                 user_type: user_type,
             	first_name: first_name,
@@ -347,13 +367,13 @@ app.get('/user/:login_name', function (request, response) {
         return;
     }
 
-    User.findOne({_id: _id}, function (err, user) {
+    User.findOne({_id: request.session._id}, function (err, user) {
         if (err) {
             response.status(400).send("Error");
             return;
         }
 
-        if (user.user_type !== "admin") {
+        if (user.user_type !== "Admin") {
             console.log(user.login_name + " is not an admin");
             response.status(400).send(user.login_name + " is not an admin");
             return;
