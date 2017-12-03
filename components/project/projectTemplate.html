@@ -27,20 +27,6 @@
                 	<span>{{project.tag}}</span>
                 	<span>{{project.reviewed}}</span>
 
-										<div class ="submitForm" ng-show="isAdmin()">
-											<form name="proposalForm">
-	                        <p> Accept/Reject Project </p>
-	                        <div>
-	                            <label><input type="radio" name="test" ng-model="radioValue" value="accept"/> Accept Proposal</label>
-	                        </div>
-	                        <div>
-	                            <label><input type="radio" name="test" ng-model="radioValue" value="reject"/> Reject Proposal</label>
-	                        </div>
-	                    </form>
-	                    <!-- Submit reviews  -->
-	                    <md-button class="md-raised md-primary" ng-click="submitProposal()">Submit</md-button>
-										</div>
-
                 </div>
             </md-card-content>
         </md-card>
