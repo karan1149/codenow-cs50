@@ -50,8 +50,8 @@ app.use(session({secret: 'secretKey', resave: false, saveUninitialized: false}))
 app.use(bodyParser.json());
 
 // Connect to the CS50Project Mongo Database
-mongoose.connect('mongodb://localhost/CS50Project');
-
+// mongoose.connect('mongodb://localhost/CS50Project');
+mongoose.connect('mongodb://code-now-user:codenow@ds121896.mlab.com:21896/heroku_c2f6v1db');
 // We have the express static module (http://expressjs.com/en/starter/static-files.html) do all
 // the work for us. This EXPORTS your current working directory that webServer.js is in. (__dirname)
 app.use(express.static(__dirname));
@@ -165,8 +165,77 @@ app.get('/user/:login_name', function (request, response) {
  */
 app.get('/projectlist/', function(request, response) {
     Project.find(function (err, projects) {
+        if (err){
+            response.status(400).send(err);
+        }
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);
+    });
+});
+
+/*
+ * POST Request for a user to like  and unlike a project
+ */
+app.post('/project/:id/like', function(request,response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    var user_id = request.session._id
+    var project_id = request.params.id;
+
+    Project.findOne({_id: project_id}, function (err, project) {
+        if (err) {
+            response.status(400).send(err);
+            return;
+        }
+
+        if (project.liked_students.includes(user_id)) {
+            project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+            project.save();
+
+            response.status(200).send('Like');
+        } else {
+            project.liked_students.push(user_id);
+            project.save();
+
+            response.status(200).send('Unlike');
+        }
+    });
+});
+
+
+/*
+ * GET Request for all unreviewed projects
+ */
+app.get('/underReview/', function(request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    User.findOne({_id: request.session._id}, function (err, user) {
+        console.log(user)
+        if (err) {
+            response.status(400).send(err);
+            return;
+        }
+
+        if (user.user_type !== "Admin") {
+            console.log(user.login_name + " is not an admin");
+            response.status(400).send(user.login_name + " is not an admin");
+            return;
+        }
+
+        Project.find({reviewed: false}, function (err, projects) {
+            if (err){
+                response.status(400).send(err);
+            }
+
+            projects = JSON.parse(JSON.stringify(projects));
+            response.status(200).send(projects);
+        });
     });
 });
 
@@ -264,7 +333,7 @@ app.post('/user', function(request, response) {
 	User.findOne({login_name: login_name}, function (err, user) {
 
 		// If no User with login_name exists yet and no Error, create new User
-    	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null) {
+    	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null && user_type !== null) {
     		User.create({
                 user_type: user_type,
             	first_name: first_name,
@@ -331,13 +400,13 @@ app.get('/user/:login_name', function (request, response) {
         return;
     }
 
-    User.findOne({_id: _id}, function (err, user) {
+    User.findOne({_id: request.session._id}, function (err, user) {
         if (err) {
             response.status(400).send("Error");
             return;
         }
 
-        if (user.user_type !== "admin") {
+        if (user.user_type !== "Admin") {
             console.log(user.login_name + " is not an admin");
             response.status(400).send(user.login_name + " is not an admin");
             return;
@@ -390,7 +459,7 @@ app.get('/user/:login_name', function (request, response) {
 
 
 // DO NOT DELETE: Opens port for loading your webserver locally
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT || 3000, function () {
     var port = server.address().port;
     console.log('Listening at http://localhost:' + port + ' exporting the directory ' + __dirname);
 });

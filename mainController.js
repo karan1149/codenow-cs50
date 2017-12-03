@@ -26,9 +26,13 @@ cs50App.config(['$routeProvider',
             templateUrl: 'components/signup/signupTemplate.html',
             controller: 'signupController'
              }).
-            when('/project:projectId', {
+            when('/project/:projectId', {
                 templateUrl: 'components/project/projectTemplate.html',
-                controller: 'projectController'
+                controller: 'ProjectController'
+            }).
+            when('/review', {
+                templateUrl: 'components/underReview/underReviewTemplate.html',
+                controller: 'UnderReviewController'
             }).
             otherwise({
                 redirectTo: '/home'
