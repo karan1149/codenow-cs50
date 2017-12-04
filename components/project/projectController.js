@@ -1,7 +1,7 @@
 'use strict';
 
 /* Home view controller. Adjust welcome message and toolbar title */
-cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
+cs50App.controller('projectController', ['$scope','$routeParams','$resource',
   function ($scope, $routeParams,$resource) {
     var toolbarTitle = document.getElementById("toolbarTitle");
     toolbarTitle.innerHTML = "Project Page";
@@ -39,7 +39,7 @@ cs50App.controller('ProjectController', ['$scope','$routeParams','$resource',
   $scope.isAdmin = function() {
     return false;
   }
-  
+
   // todo: POST REQUEST NEEDED to submit the fact that project is reviewed/not reviewed
   $scope.submitProposal = function() {
   };

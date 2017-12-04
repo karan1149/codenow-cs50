@@ -30,6 +30,10 @@ cs50App.config(['$routeProvider',
                 templateUrl: 'components/project/projectTemplate.html',
                 controller: 'projectController'
             }).
+            when('/profile/private', {
+                templateUrl: 'components/editableProfile/editableTemplate.html',
+                controller: 'privateProfileController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

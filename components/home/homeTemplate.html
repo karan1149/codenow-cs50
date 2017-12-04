@@ -1,6 +1,5 @@
 
-
-<!--<div className="flexGrowColumn relative">-->
+<div class='topBar'>
 	<div class="codeNowTitle">
 		<img class= "codenowlogo" src ='../../images/codenow%20logo%20large.png' />
 	</div>
@@ -8,22 +7,20 @@
 			<a class="submit NavButtons" ng-href="#!/projects/new">submit</a>
 			<a class="projects NavButtons" ng-href="#/home">projects</a>
 	</div>
+</div>
 	<div class="projectsBot scrollable">
 		<div class="project" ng-repeat="project in projectList">
 				<div class="projRow">
-					<span class="md-deadline ellipsis">{{project.title}} </span>
+					<span class="projectTitle ellipsis">{{project.title}} </span>
 					<span class="subdate">18/11/2017</span>
 				</div>
-				<span class="descriptionTag ellipsis">Description: {{project.description}} </span>
+				<span class="descriptionTag ellipsis"><i>Description: </i>{{project.description}} </span>
 				<div class="projRow">
 					<span class="tag ellipsis">{{project.tag}} </span>
-					<div class="dateWrapper">
+					<!-- <div class="dateWrapper">
 						<span class="duedate">Due</span>
 						<div class="actualDate">23/11/17</div>
-					</div>
+					</div> -->
 				</div>
-				<!--<md-button class="md-raised md-primary" ng-click="detailedPage()">Details</md-button>-->
 		</div>
 	</div>
-
-<!--</div>-->

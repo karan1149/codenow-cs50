@@ -23,17 +23,3 @@
 #toolbarTitle {
 	test-align: center;
 }
-
-
-.codeNowTitle{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 7vh;
-	background-color: white;
-}
-
-.codenowlogo{
-	height:20vh;
-}

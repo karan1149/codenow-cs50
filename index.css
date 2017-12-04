@@ -16,11 +16,17 @@
     justify-content: center;
 }
 
+.account{
+  background: white;
+  border: none;
+  float: right;
+}
+
 .dropdown {
-    position: relative;
-    display: inline-block;
-    float:right;
-    height: 100%;
+  position: relative;
+  display: inline-flex;
+  float: right;
+  height: 100%;
 }
 
 .dropdown-content {
@@ -31,6 +37,7 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     right: 0;
+    top: 5vh;
 }
 
 .dropdown-content a {
@@ -47,5 +54,9 @@
 }
 
 .dropdown:hover .dropbtn {
+    background-color: #f9f9f9;
+}
+
+.account:hover {
     background-color: #f9f9f9;
 }
