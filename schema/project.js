@@ -13,7 +13,8 @@ var mongoose = require('mongoose');
 // NOTE: All documents (instances) in a Mongoose schema also have a _id field by default!
 var projectSchema = new mongoose.Schema({
 	contact_info: String, // contact info of community member
-	student: String, // student who has accepted the project
+	liked_students: [String], // students who have liked the project
+	assigned_students: [String], // students who have been assigned to the project
 	description: String,  // description of the project
 	community_member: String,  // community who created project
 	tag: String,  // tag associated with the project

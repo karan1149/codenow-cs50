@@ -3,16 +3,23 @@
 /* Home view controller. Adjust welcome message and toolbar title */
 cs50App.controller('projectController', ['$scope','$routeParams','$resource',
   function ($scope, $routeParams,$resource) {
-    var toolbarTitle = document.getElementById("toolbarTitle");
-    toolbarTitle.innerHTML = "Project Page";
 
     var projectId = $routeParams.projectId;
-    console.log($routeParams)
-    console.log('What is this?');
     var resource = $resource('/projects/' + projectId);
     resource.get({}, function(model){
       $scope.project = model;
     });
+
+
+    // use in html with something like '<button ng-click="like()">Like or unlike</button>'
+    $scope.like = function() {
+      var likeResource = $resource('/project/' + projectId + '/like');
+      resource.save({}, function(like_message){
+        console.log(like_message); // this will either by 'Like' or 'Unlike'
+      });
+    }
+
+
 
 /* project will have the following attributes:
 
@@ -36,6 +43,7 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource',
     };
     */
   //right now, just returning false so that the form doesn't appear
+/*
   $scope.isAdmin = function() {
     return false;
   }
@@ -43,5 +51,5 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource',
   // todo: POST REQUEST NEEDED to submit the fact that project is reviewed/not reviewed
   $scope.submitProposal = function() {
   };
-
+*/
 }]);

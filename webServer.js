@@ -165,8 +165,77 @@ app.get('/user/:login_name', function (request, response) {
  */
 app.get('/projectlist/', function(request, response) {
     Project.find(function (err, projects) {
+        if (err){
+            response.status(400).send(err);
+        }
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);
+    });
+});
+
+/*
+ * POST Request for a user to like  and unlike a project
+ */
+app.post('/project/:id/like', function(request,response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    var user_id = request.session._id
+    var project_id = request.params.id;
+
+    Project.findOne({_id: project_id}, function (err, project) {
+        if (err) {
+            response.status(400).send(err);
+            return;
+        }
+
+        if (project.liked_students.includes(user_id)) {
+            project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+            project.save();
+
+            response.status(200).send('Like');
+        } else {
+            project.liked_students.push(user_id);
+            project.save();
+
+            response.status(200).send('Unlike');
+        }
+    });
+});
+
+
+/*
+ * GET Request for all unreviewed projects
+ */
+app.get('/underReview/', function(request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    User.findOne({_id: request.session._id}, function (err, user) {
+        console.log(user)
+        if (err) {
+            response.status(400).send(err);
+            return;
+        }
+
+        if (user.user_type !== "Admin") {
+            console.log(user.login_name + " is not an admin");
+            response.status(400).send(user.login_name + " is not an admin");
+            return;
+        }
+
+        Project.find({reviewed: false}, function (err, projects) {
+            if (err){
+                response.status(400).send(err);
+            }
+
+            projects = JSON.parse(JSON.stringify(projects));
+            response.status(200).send(projects);
+        });
     });
 });
 
@@ -264,7 +333,7 @@ app.post('/user', function(request, response) {
 	User.findOne({login_name: login_name}, function (err, user) {
 
 		// If no User with login_name exists yet and no Error, create new User
-    	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null) {
+    	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null && user_type !== null) {
     		User.create({
                 user_type: user_type,
             	first_name: first_name,
@@ -331,13 +400,13 @@ app.get('/user/:login_name', function (request, response) {
         return;
     }
 
-    User.findOne({_id: _id}, function (err, user) {
+    User.findOne({_id: request.session._id}, function (err, user) {
         if (err) {
             response.status(400).send("Error");
             return;
         }
 
-        if (user.user_type !== "admin") {
+        if (user.user_type !== "Admin") {
             console.log(user.login_name + " is not an admin");
             response.status(400).send(user.login_name + " is not an admin");
             return;
