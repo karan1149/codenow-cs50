@@ -31,13 +31,20 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
             $scope.loggingIn();
             console.log(model)
 
-            // Set window location
-            var next = "#/users/" + model._id;
-            window.location = next;
-
             // Set logged in user. Notice how the scope.main.loggedInUser variables can be used across different files!
             $scope.main.loggedInUser = model.first_name + " " + model.last_name;
             $scope.main.user_type = model.user_type
+
+            // Set window location based on user type
+            console.log(model.user_type);
+            if(model.user_type !== 'Admin') {
+              var next = "#/users/" + model._id;
+              window.location = next;
+            } else {
+
+              window.location = '#!/adminview'
+            }
+
 
             // Set visibility of "Logout" Button
             $scope.logout.style.visibility = "visible";

@@ -42,8 +42,16 @@ cs50App.controller('signupController', ['$scope', '$rootScope', '$routeParams', 
                         $scope.loggingIn();
 
                         // set next location
-                        window.location = "#/home";
+                        //window.location = "#/home";
+                        $scope.main.loggedInUser = model.first_name + " " + model.last_name;
+                        $scope.main.user_type = model.user_type
 
+                        // Set window location
+                        if(model.user_type !== 'Admin') {
+                          window.location = "#/home";
+                        } else {
+                          window.location = '#!/adminview';
+                        }
                         // Change visibility of file upload and logout button
                         $scope.logout.style.visibility = "visible";
                     }, function errorHandling(err) {
