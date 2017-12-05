@@ -11,3 +11,48 @@
 .md-title, .md-subhead {
     text-align: center;
 }
+
+
+.flex_row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.emailTo {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.contactclass {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.table_left {
+  margin-left: 1%;
+}
+
+.proj_card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.descr_padding {
+  padding: 5% 0;
+}
+
+.like:hover{
+  color:red;
+}
+.ellipsizedTest:hover{
+    overflow: visible;
+    white-space: normal;
+    height:auto;  /* just added this line */
+}
+
+.like_bar {
+  padding: 1% 0;
+}

@@ -1,8 +1,8 @@
 'use strict';
 
 /* Home view controller. Adjust welcome message and toolbar title */
-cs50App.controller('HomeController', ['$scope','$routeParams','$resource',
-  function ($scope, $routeParams,$resource) {
+cs50App.controller('HomeController', ['$scope','$routeParams','$resource','$location',
+  function ($scope, $routeParams,$resource,$location) {
     // var toolbarTitle = document.getElementById("toolbarTitle");
     // toolbarTitle.innerHTML = "Home Page";
     console.log('hi prelist')
@@ -17,4 +17,9 @@ cs50App.controller('HomeController', ['$scope','$routeParams','$resource',
       // tag: String,  // tag associated with the project
       // title: String // title of the project
     });
+    $scope.go = function ( projectId ) {
+      let path = '/project/' +  projectId;
+      $location.path( path );
+    };
+
 }]);

@@ -1,33 +1,52 @@
-<div style="text-align: center;">
-	<p id = "welcome">Welcome {{main.loggedInUser}}</p>
-</div>
 
+<div class='topBar'>
+	<div class="codeNowTitle">
+		<img class= "codenowlogo" src ='../../images/codenow%20logo%20large.png' />
+	</div>
+	<div class="navRow">
+			<a class="submit NavButtons" ng-href="#!/projects/new">submit</a>
+			<a class="projects NavButtons" ng-href="#!/home">projects</a>
+			<a ng-if="main.user_type == 'Admin'" ng-href="#!/review">review</a>
+	</div>
+</div>
 <md-content layout = "column">
     <div>
         <md-card id = "detailCard">
-
             <!-- Submit Card  - the card to submit a new Project-->
             <md-card-header>
                 <md-card-header-text>
-										<span class="md-title">Project Name </span>
-										<span>{{project.title}}</span>
-
+										<span class="md-title">{{project.title}}</span>
                 </md-card-header-text>
             </md-card-header>
 
-            <!-- Input Fields -->
             <md-card-content>
-                <div layout-gt-sm="column">
-									<span class="md-subhead">Description</span>
-                	<span>{{project.description}}</span>
-
-                	<span>{{project.contact_info}}</span>
-                	<span>{{project.student}}</span>
-                	<span>{{project.community_member}}</span>
-                	<span>{{project.tag}}</span>
-                	<span>{{project.reviewed}}</span>
-
-                </div>
+									<div class = "flex_row ">
+										<div>Tags:</div>
+										<div class="tag ellipsis table_left">{{project.tag}} </div>
+									</div>
+                	<div class= "descr_padding">{{project.description}}</div>
+                	<div class= 'contactclass '>
+									<div class = "flex_row">
+										<img src="../images/ic_perm_identity_black_24px.svg"/>
+										<div class= "table_left">{{project.community_member}}</div>
+									</div>
+ 									<div  class = "flex_row" ng-click='sendMail(project.email,"CodeNow: Project Submission","")'>
+										<img src="../images/ic_email_black_24px.svg"/>
+ 										<div class = 'emailTo table_left'>{{project.email}} </div>
+									</div>
+									<div class = "flex_row ">
+										<img src="../images/ic_phone_black_24px.svg"/>
+										<div class= "table_left">{{project.contact_number}}</div>
+									</div>
+									</div>
+									<hr>
+									<div class= 'flex_row like_bar'>
+									<i class="fa fa-heart like" aria-hidden="true" ng-click="like()"></i>
+									<!-- PROBLEM HERE! WE NEED TO MAKE THIS INTO A STRING! -->
+									<div class = 'ellipsizedText ellipsis table_left'>{{like_string}}</div>
+									</div>
+									<hr>
+									<div>{{project.reviewed}}</div>
             </md-card-content>
         </md-card>
     </div>

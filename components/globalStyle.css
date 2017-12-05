@@ -72,3 +72,10 @@ div.scrollbarWidthPlaceholder { /* scrollbarwidth placeholder */
 	background-color: #ED3023;
 	cursor: pointer;
 }
+
+.ellipsizedText {
+	width: 72vw;
+	white-space: nowrap;
+	overflow: hidden;
+	/*border-bottom: 1px solid white;*/
+}

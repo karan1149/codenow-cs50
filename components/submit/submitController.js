@@ -1,15 +1,16 @@
 'use strict';
 
 /* Manages control over user-detail functionality */
-cs50App.controller('SubmitController', ['$scope', '$rootScope', '$routeParams', '$resource',
-    function ($scope, $rootScope, $routeParams, $resource) {
+cs50App.controller('SubmitController', ['$scope', '$rootScope', '$routeParams', '$resource', '$location',
+    function ($scope, $rootScope, $routeParams, $resource, $location) {
 
         // We use Scope Variables so that Angular can update these for us as the user is typing in them. See loginTemplate.html
-        $scope.contact_info;
         $scope.description;
-        $scope.community_member;
+        $scope.community_member = $scope.main.loggedInUser;
         $scope.tag;
         $scope.title;
+        $scope.email;
+        $scope.contact_number;
 
 /*
         var contact_info = request.body.contact_info // contact info of community member
@@ -22,21 +23,22 @@ cs50App.controller('SubmitController', ['$scope', '$rootScope', '$routeParams', 
         $scope.submitClick = function() {
 
             // Check for missing fields
-            if (!$scope.contact_info || !$scope.description || !$scope.community_member || !$scope.title) {
+            if (!$scope.contact_number || !$scope.email || !$scope.description || !$scope.community_member || !$scope.title) {
                 window.alert("Missing Fields.");
 
             } else {
 
                 // Post - /user
                 var userRes = $resource("/projects/new");
-                var obj = {contact_info: $scope.contact_info, description: $scope.description, community_member: $scope.community_member,
-                    tag: $scope.tag, title: $scope.title};
+                var obj = {contact_number: $scope.contact_number, description: $scope.description, community_member: $scope.community_member,
+                    tag: $scope.tag, title: $scope.title, email: $scope.email};
                 console.log(obj)
                 userRes.save(obj, function (data, headers, status) {
 
 
                     // Alert successful submission
                     window.alert("Successfully submitted project: " + $scope.title);
+                    $location.path('/home');
                     /*
                     $scope.main.loggedInUser = $scope.community_member;
 

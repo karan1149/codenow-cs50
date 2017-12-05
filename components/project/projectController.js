@@ -1,25 +1,53 @@
 'use strict';
 
 /* Home view controller. Adjust welcome message and toolbar title */
-cs50App.controller('projectController', ['$scope','$routeParams','$resource',
-  function ($scope, $routeParams,$resource) {
+cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$window',
+  function ($scope, $routeParams,$resource, $window) {
 
     var projectId = $routeParams.projectId;
     var resource = $resource('/projects/' + projectId);
     resource.get({}, function(model){
       $scope.project = model;
+      let like_string = 'Liked by ';
+      for (let name of $scope.project.liked_student_names){
+        like_string += ' ' + name + ',';
+      }
+      if (like_string == 'Liked by ' ){
+          like_string = 'Be the first to like!'
+      }
+      console.log(like_string);
+      $scope.like_string = like_string;
     });
-
+    //listen to changes in database.s
+    //Need to convert the id's to student names
 
     // use in html with something like '<button ng-click="like()">Like or unlike</button>'
     $scope.like = function() {
-      var likeResource = $resource('/project/' + projectId + '/like');
-      resource.save({}, function(like_message){
+      var likeResource = $resource('/project/' + projectId + '/like' );
+      console.log('/project/' + projectId + '/like');
+      likeResource.save({"name": $scope.main.loggedInUser}, function(like_message){
         console.log(like_message); // this will either by 'Like' or 'Unlike'
+      });
+      resource.get({}, function(model){
+        console.log('HI !!!');
+        $scope.project = model;
+        console.log(model);
+        let like_string = 'Liked by ';
+        for (let name of $scope.project.liked_student_names){
+          like_string += ' ' + name + ',';
+        }
+        if (like_string == 'Liked by ' ){
+            like_string = 'Be the first to like!'
+        }
+        console.log(like_string);
+        $scope.like_string = like_string;
       });
     }
 
-
+    $scope.sendMail = function(emailId,subject,message){
+      console.log(emailId)
+      $window.open("mailto:"+ emailId + "?subject=" + subject+"&body="+message,"_self");
+    };
 
 /* project will have the following attributes:
 

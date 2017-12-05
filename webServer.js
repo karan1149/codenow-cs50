@@ -177,6 +177,7 @@ app.get('/projectlist/', function(request, response) {
  * POST Request for a user to like  and unlike a project
  */
 app.post('/project/:id/like', function(request,response) {
+    console.log(request.body.name);
     if (request.session._id === undefined) {
         response.status(401).send('No one logged in');
         return;
@@ -190,18 +191,30 @@ app.post('/project/:id/like', function(request,response) {
             response.status(400).send(err);
             return;
         }
-
-        if (project.liked_students.includes(user_id)) {
+        if (project.liked_students.includes(user_id) &&
+              project.liked_student_names.includes(request.body.name) ) {
             project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+            project.liked_student_names.splice(project.liked_student_names.indexOf(request.body.name), 1);
             project.save();
-
-            response.status(200).send('Like');
-        } else {
-            project.liked_students.push(user_id);
-            project.save();
-
             response.status(200).send('Unlike');
+        } else {
+          project.liked_students.push(user_id);
+          project.liked_student_names.push(request.body.name)
+          project.save();
+          response.status(200).send('like');
         }
+
+    //     if (project.liked_students.includes(user_id)) {
+    //         project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+    //         project.save();
+    //
+    //
+    //     } else {
+    //         project.liked_students.push(user_id);
+    //         project.save();
+    //
+    //         response.status(200).send('Unlike');
+    //     }
     });
 });
 
@@ -270,7 +283,7 @@ app.get('/projects/:id', function(request, response) {
 
 /*
  * POST: Request creating new PROJECT
- *  - Body of request should contain contact_info, 
+ *  - Body of request should contain contact_number, email
  *      description, community_member, tag, title
  */
 app.post('/projects/new', function(request, response) {
@@ -279,13 +292,14 @@ app.post('/projects/new', function(request, response) {
         return;
     }
 
-    var contact_info = request.body.contact_info; // contact info of community member
     var description = request.body.description;  // description of the project
     var community_member = request.body.community_member; // community who created project
     var tag = request.body.tag ; // tag associated with the project
     var title = request.body.title; // title of the project
+    var email = request.body.email;
+    var contact_number = request.body.contact_number;
 
-    if (contact_info === null) {
+    if (email === null) {
         response.status(400).send("Contact Info Required!");
     } else if (title === null) {
         response.status(400).send("Title Required!");
@@ -293,10 +307,13 @@ app.post('/projects/new', function(request, response) {
         response.status(400).send("Community Member Required!");
     } else if (description === null) {
         response.status(400).send("Description Required!");
+    } else if (contact_number === null) {
+        response.status(400).send("Description Required!");
     }
 
     Project.create({
-        contact_info: contact_info,
+        contact_number: contact_number,
+        email: email,
         description: description,
         community_member: community_member,
         tag: tag,
@@ -414,14 +431,17 @@ app.get('/user/:login_name', function (request, response) {
 
         var id = request.params.id; // project id in mongo
         var reviewed= request.body.reviewed; // rewiewed status of project
-        var contact_info = request.body.contact_info; // contact info of community member
+        var contact_number = request.body.contact_number; // contact info of community member
+        var email = request.body.email;
         var description = request.body.description;  // description of the project
         var community_member = request.body.community_member; // community who created project
         var tag = request.body.tag ; // tag associated with the project
         var title = request.body.title; // title of the project
 
         // check that all fields are filled out
-        if (contact_info === null) {
+        if (email === null) {
+            response.status(400).send("Contact Info Required!");
+        } else if (contact_number === null) {
             response.status(400).send("Contact Info Required!");
         } else if (title === null) {
             response.status(400).send("Title Required!");
@@ -443,7 +463,8 @@ app.get('/user/:login_name', function (request, response) {
 
             // update the project
             project.reviewed = reviewed;
-            project.contact_info = contact_info;
+            project.contact_number = contact_number;
+            project.email = email;
             project.tag = tag;
             project.community_member = community_member;
             project.description = description;
