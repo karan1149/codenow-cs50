@@ -1,0 +1,31 @@
+
+<md-content class='submitColumn' layout = "column">
+    <div>
+        <md-card id = "submitCard">
+            <!-- Submit Card  - the card to submit a new Project-->
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-title">Edit Profile</span>
+                </md-card-header-text>
+            </md-card-header>
+
+            <!-- Input Fields -->
+            <md-card-content>
+                <div layout-gt-sm="column">
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Contact Number</label>
+                        <input ng-model="contact_number" ng-required = "true">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>email</label>
+                        <input ng-model="email" ng-required = "true">
+                    </md-input-container>
+
+                    <!-- Submit project  -->
+                    <md-button class="md-raised md-primary" ng-click="submitClick()">Edit</md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</md-content>

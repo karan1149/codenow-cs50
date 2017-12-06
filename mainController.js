@@ -40,7 +40,11 @@ cs50App.config(['$routeProvider',
             }).
             when('/projects/:projectId/edit', {
                 templateUrl: 'components/submit/submit.html',
-                controller: 'EditController'  
+                controller: 'EditController'
+            }).
+            when('/profile/private/editUser', {
+                templateUrl: 'components/editUser/editUser.html',
+                controller: 'EditUserController'
             }).
             otherwise({
                 redirectTo: '/home'
