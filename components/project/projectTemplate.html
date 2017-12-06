@@ -42,10 +42,14 @@
 									<hr>
 									<div ng-if="main.user_type == 'Admin' && project.reviewed">Project Approved</div>
 									<div ng-if="main.user_type == 'Admin' && !project.reviewed">Project Not Yet Approved</div>
+									<div>Assigned students</div>
+									<div ng-repeat="student in project.assigned_students">
+										<span>{{student}} </span>
+									</div>
 									<div ng-if="main.user_type == 'Admin' &&  project.reviewed">
 										<div>
 											Assign a student by username: <input type="text" ng-model="studentUsernameAdd">
-											<button ng-click="addStudent(studentUsernameAdd)"></button>
+											<button ng-click="assignStudent(studentUsernameAdd)"></button>
 										</div>
 										<div>
 											Remove a student by username: <input type="text" ng-model="studentUsernameRemove">

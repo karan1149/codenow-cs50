@@ -28,7 +28,7 @@ cs50App.config(['$routeProvider',
              }).
             when('/project/:projectId', {
                 templateUrl: 'components/project/projectTemplate.html',
-                controller: 'projectController'
+                controller: 'ProjectController'
             }).
             when('/review', {
                 templateUrl: 'components/underReview/underReviewTemplate.html',
