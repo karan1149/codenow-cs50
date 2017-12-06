@@ -50,8 +50,7 @@ div.scrollbarWidthPlaceholder { /* scrollbarwidth placeholder */
   color: white;
   border-radius: 11px;
   text-align: center;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin: 1% 1%;
   padding-left: 2%;
   padding-right: 2%;
   display: flex;
@@ -73,9 +72,33 @@ div.scrollbarWidthPlaceholder { /* scrollbarwidth placeholder */
 	cursor: pointer;
 }
 
+.flex_col {
+	display: flex;
+	flex-direction: column;
+}
+
+.topBar{
+	height: 15vh;
+	display: flex;
+	flex-direction: column;
+	width : 100%;
+}
+
 .ellipsizedText {
 	width: 72vw;
 	white-space: nowrap;
 	overflow: hidden;
 	/*border-bottom: 1px solid white;*/
+}
+
+.spaceInbetween {
+	justify-content: space-between;
+}
+
+.justifyCenter {
+	justify-content: center;
+}
+
+.titlecard{
+	padding: 0 16px;
 }

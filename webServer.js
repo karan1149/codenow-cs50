@@ -190,7 +190,7 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
 
         var studentUsername = request.params.studentUsername
 
-        User.findOne({userName: studentUsername} function (err2, student) {
+        User.findOne({userName: studentUsername}, function (err2, student) {
             if (err2) {
                 response.status(400).send(err);
             }
@@ -228,7 +228,7 @@ app.post('/projects/:projectId/remove/:studentUsername', function (request, resp
 
         var studentUsername = request.params.studentUsername
 
-        User.findOne({userName: studentUsername} function (err2, student) {
+        User.findOne({userName: studentUsername}, function (err2, student) {
             if (err2) {
                 response.status(400).send(err);
             }

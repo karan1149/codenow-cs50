@@ -3,13 +3,15 @@
     <div>
         <md-card id = "detailCard">
             <!-- Submit Card  - the card to submit a new Project-->
-            <md-card-header>
-                <md-card-header-text>
-                						<button ng-if="main.user_type == 'Admin' && !project.reviewed" ng-click="approve()">Approve</button>
+            <div class= 'flex_col titlecard'>
+							<div class = "flex_row spaceInbetween">
+								<button ng-if="main.user_type == 'Admin' && !project.reviewed" ng-click="approve()">Approve</button>
+								<button ng-if="main.user_type == 'Admin'" ng-click="edit()">Edit</button>
+							</div>
+                <div class="flex_row justifyCenter">
 										<span class="md-title">{{project.title}}</span>
-										<button ng-if="main.user_type == 'Admin'" ng-click="edit()">Adit</button>
-                </md-card-header-text>
-            </md-card-header>
+                </div>
+            </div>
 
             <md-card-content>
 									<div class = "flex_row ">
