@@ -151,6 +151,44 @@ app.get('/user/:login_name', function (request, response) {
 });
 
 /*
+ * POST Request to update the information for a specified User (based on Login_Name)
+ */
+app.post('/user/:login_name/update', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    var login_name = request.params.login_name;
+    var password = request.body.password;
+    var first_name = request.body.first_name;
+    var last_name = request.body.last_name;
+    var email = request.body.email;
+
+    // Search for single id and return relevant information
+    User.findOne({login_name: login_name}, function (err, user) {
+        if (!err && user) {
+            if (first_name){
+                user.first_name = first_name;
+            }
+            if (last_name) {
+                user.last_name = last_name;
+            }
+            if (email) {
+                user.email = email;
+            }
+            if (password) {
+                user.password = password; 
+            }
+            user.save();
+            response.status(200).send("Updated User")
+        } else {
+            response.status(400).send("Error");
+        }
+    });
+});
+
+/*
  * GET Request for all the projects
  */
 app.get('/projectlist/', function(request, response) {
