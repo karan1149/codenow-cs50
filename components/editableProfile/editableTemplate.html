@@ -4,8 +4,20 @@
 		<img class= "codenowlogo" src ='../../images/codenow%20logo%20large.png' />
 	</div>
 	<div class="navRow">
+		<div class= 'contactclass '>
+		<div class = "flex_row">
+			<img src="../images/ic_perm_identity_black_24px.svg"/>
+			<div class= "table_left">{{project.community_member}}</div>
+		</div>
+		<div  class = "flex_row" ng-click='sendMail(project.email,"CodeNow: Project Submission","")'>
+			<img src="../images/ic_email_black_24px.svg"/>
+			<div class = 'emailTo table_left'>{{project.email}} </div>
+		</div>
+		<div class = "flex_row ">
+			<img src="../images/ic_phone_black_24px.svg"/>
+			<div class= "table_left">{{project.contact_number}}</div>
+		</div>
+		</div>
+		<hr>
 	</div>
 </div>
-<form action="/file-upload"
-      class="dropzone"
-      id="my-awesome-dropzone"></form>
