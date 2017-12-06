@@ -29,7 +29,6 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$
         console.log(like_message); // this will either by 'Like' or 'Unlike'
       });
       resource.get({}, function(model){
-        console.log('HI !!!');
         $scope.project = model;
         console.log(model);
         let like_string = 'Liked by ';
@@ -49,7 +48,7 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$
       $window.open("mailto:"+ emailId + "?subject=" + subject+"&body="+message,"_self");
     };
 
-    $scope.review = function () {
+    $scope.approve = function () {
       var reviewResource = $resource('/projects/' + $scope.project._id + '/update');
       $scope.project.reviewed = true
       reviewResource.save($scope.project, function (model) {
@@ -57,6 +56,10 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$
       }, function (err) {
         window.alert(err.data);
       });
+    };
+
+    $scope.edit = function() {
+      window.location = "#!/projects/" + $scope.project._id + "/edit";
     };
 
 

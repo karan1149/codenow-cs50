@@ -173,50 +173,50 @@ app.get('/projectlist/', function(request, response) {
     });
 });
 
-/*
- * POST Request for a user to like  and unlike a project
- */
-app.post('/project/:id/like', function(request,response) {
-    console.log(request.body.name);
-    if (request.session._id === undefined) {
-        response.status(401).send('No one logged in');
-        return;
-    }
+// /*
+//  * POST Request for a user to like  and unlike a project
+//  */
+// app.post('/project/:id/like', function(request,response) {
+//     console.log(request.body.name);
+//     if (request.session._id === undefined) {
+//         response.status(401).send('No one logged in');
+//         return;
+//     }
 
-    var user_id = request.session._id
-    var project_id = request.params.id;
+//     var user_id = request.session._id
+//     var project_id = request.params.id;
 
-    Project.findOne({_id: project_id}, function (err, project) {
-        if (err) {
-            response.status(400).send(err);
-            return;
-        }
-        if (project.liked_students.includes(user_id) &&
-              project.liked_student_names.includes(request.body.name) ) {
-            project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
-            project.liked_student_names.splice(project.liked_student_names.indexOf(request.body.name), 1);
-            project.save();
-            response.status(200).send('Unlike');
-        } else {
-          project.liked_students.push(user_id);
-          project.liked_student_names.push(request.body.name)
-          project.save();
-          response.status(200).send('like');
-        }
+//     Project.findOne({_id: project_id}, function (err, project) {
+//         if (err) {
+//             response.status(400).send(err);
+//             return;
+//         }
+//         if (project.liked_students.includes(user_id) &&
+//               project.liked_student_names.includes(request.body.name) ) {
+//             project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+//             project.liked_student_names.splice(project.liked_student_names.indexOf(request.body.name), 1);
+//             project.save();
+//             response.status(200).send('Unlike');
+//         } else {
+//           project.liked_students.push(user_id);
+//           project.liked_student_names.push(request.body.name)
+//           project.save();
+//           response.status(200).send('like');
+//         }
 
-    //     if (project.liked_students.includes(user_id)) {
-    //         project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
-    //         project.save();
-    //
-    //
-    //     } else {
-    //         project.liked_students.push(user_id);
-    //         project.save();
-    //
-    //         response.status(200).send('Unlike');
-    //     }
-    });
-});
+//     //     if (project.liked_students.includes(user_id)) {
+//     //         project.liked_students.splice(project.liked_students.indexOf(user_id), 1);
+//     //         project.save();
+//     //
+//     //
+//     //     } else {
+//     //         project.liked_students.push(user_id);
+//     //         project.save();
+//     //
+//     //         response.status(200).send('Unlike');
+//     //     }
+//     });
+// });
 
 
 /*
