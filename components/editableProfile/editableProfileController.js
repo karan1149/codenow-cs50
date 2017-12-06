@@ -10,13 +10,13 @@ function ($scope, $rootScope, $routeParams, $resource) {
       console.log(model.projects);
       $scope.userProjects = [];
       //$scope.user.email = model.email;
-      //$scope.user.contact = 
+      //$scope.user.contact =
   }, function (err) {
     console.log(err);
   });
 
   $scope.edit = function() {
-    window.location = "#!/user/" + $scope.main.login_name + "/editUser";
+    window.location = "#!/editUser";
   };
 
   $scope.go = function ( projectId ) {
