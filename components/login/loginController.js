@@ -17,9 +17,8 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
     $scope.password;
 
     // Grab the logout button by searching for it by its Id. TODO: Uncomment this.
-    $scope.logout = document.querySelector(".toolbar");
-    $scope.logout.style.visibility = "hidden";      // Hide it initially
-
+    $scope.logout = document.querySelector(".loggedInToolBar");
+    $scope.logout.style.display = "None";
     // Run Login and validate upon user clicking Login Button
     $scope.loginClick = function() {
 
@@ -40,7 +39,7 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
             $scope.main.user_type = model.user_type
 
             // Set visibility of "Logout" Button
-            $scope.logout.style.visibility = "visible";
+            $scope.logout.style.display = "block";
         }, function errorHandling(err) {
 
             // window.alert will show a popup containing text.
