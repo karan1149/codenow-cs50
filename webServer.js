@@ -173,6 +173,61 @@ app.get('/projectlist/', function(request, response) {
     });
 });
 
+
+/*
+ * POST Request to assign a particular student to a project
+ */
+app.post('/projects/:projectId/assign/:studentUsername', function (request, response) {
+    var projectId = request.params.projectId
+
+    Project.findOne({_id: projectId}, function (err, project) {
+        if (err) {
+            response.status(400).send(err);
+        }
+
+        var studentUsername = request.params.studentUsername
+
+        User.findOne({userName: studentUsername} function (err2, student) {
+            if (err2) {
+                response.status(400).send(err);
+            }
+
+            project.assigned_students.push(studentUsername);
+            project.save();
+            student.projects.push(projectId);
+            student.save();
+            response.status(200).send();
+        })
+    });
+});
+
+/*
+ * POST Request to remove a particular student to a project
+ */
+app.post('/projects/:projectId/remove/:studentUsername', function (request, response) {
+    var projectId = request.params.projectId
+
+    Project.findOne({_id: projectId}, function (err, project) {
+        if (err) {
+            response.status(400).send(err);
+        }
+
+        var studentUsername = request.params.studentUsername
+
+        User.findOne({userName: studentUsername} function (err2, student) {
+            if (err2) {
+                response.status(400).send(err);
+            }
+
+            project.assigned_students.splice(project.assigned_students.indexOf(studentUsername), 1);
+            project.save();
+            student.projects.splice(student.projects.indexOf(projectId), 1);
+            student.save();
+            response.status(200).send();
+        })
+    });
+});
+
 // /*
 //  * POST Request for a user to like  and unlike a project
 //  */

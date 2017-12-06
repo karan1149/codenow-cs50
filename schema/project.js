@@ -16,7 +16,7 @@ var projectSchema = new mongoose.Schema({
 	contact_number: String, //contact number of the community member
 	// liked_students: [String], // students who have liked the project
 	// liked_student_names: [String],
-	assigned_students: [String], // students who have been assigned to the project
+	assigned_students: [String], // usernames of students who have been assigned to the project
 	description: String,  // description of the project
 	community_member: String,  // community who created project
 	tag: String,  // tag associated with the project
