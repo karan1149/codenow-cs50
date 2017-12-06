@@ -36,7 +36,9 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
 
             // Set logged in user. Notice how the scope.main.loggedInUser variables can be used across different files!
             $scope.main.loggedInUser = model.first_name + " " + model.last_name;
-            $scope.main.user_type = model.user_type
+            console.log(model);
+            $scope.main.user_type = model.user_type;
+            $scope.main.login_name = model.login_name;
 
             // Set visibility of "Logout" Button
             $scope.logout.style.display = "block";
