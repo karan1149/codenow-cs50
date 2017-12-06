@@ -43,14 +43,17 @@
 									<div ng-if="main.user_type == 'Admin' && project.reviewed">Project Approved</div>
 									<div ng-if="main.user_type == 'Admin' && !project.reviewed">Project Not Yet Approved</div>
 									<div ng-if="main.user_type == 'Admin' &&  project.reviewed">
-										<div>
-											Assign a student by username: <input type="text" ng-model="studentUsernameAdd">
-											<button ng-click="addStudent(studentUsernameAdd)"></button>
-										</div>
-										<div>
-											Remove a student by username: <input type="text" ng-model="studentUsernameRemove">
-											<button ng-click="removeStudent(studentUsernameRemove)"></button>
-										</div>
+                    <div> Assign students to this project!</div>
+                      <md-input-container class ="removeMarginsAndPaddingInput" flex-gt-sm>
+                          <label>Assign by username</label>
+                          <input ng-model="studentUsernameAdd">
+                      </md-input-container>
+											<button ng-click="addStudent(studentUsernameAdd)">+</button>
+                      <md-input-container class ="removeMarginsAndPaddingInput"  flex-gt-sm>
+                          <label>Remove by username</label>
+                          <input ng-model="studentUsernameRemove">
+                      </md-input-container>
+											<button ng-click="removeStudent(studentUsernameRemove)">-</button>
 									</div>
             </md-card-content>
         </md-card>

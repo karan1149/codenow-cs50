@@ -56,3 +56,8 @@
 .like_bar {
   padding: 1% 0;
 }
+
+.removeMarginsAndPaddingInput {
+  margin: none;
+  padding: none;
+}
