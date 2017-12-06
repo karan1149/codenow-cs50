@@ -2,12 +2,35 @@
 <md-content layout = "column">
     <div>
         <md-card id = "detailCard">
+          <md-card-content>
+          <div class= "italic green" ng-if="main.user_type == 'Admin' && project.reviewed">This project has been approved for student viewing.</div>
+          <div class= "italic red" ng-if="main.user_type == 'Admin' && !project.reviewed">This project has been not approved for student viewing.</div>
+          <div class = "flex_row spaceInbetween">
+            <md-button  class='blueButton' ng-if="main.user_type == 'Admin' && !project.reviewed" ng-click="approve()">Approve</md-button>
+            <md-button   class='greyButton' ng-if="main.user_type == 'Admin'" ng-click="edit()">Edit</md-button>
+          </div>
+        <!-- <div class="flex_col" ng-if="main.user_type == 'Admin' &&  project.reviewed">
+            <div class="text-center"> Assign students to this project!</div>
+            <div class='flex_row'>
+              <md-input-container class ="removeMarginsAndPaddingInput" flex-gt-sm>
+                  <label>Assign by username</label>
+                  <input ng-model="studentUsernameAdd">
+              </md-input-container>
+              <md-button class="blueButton" ng-click="assignStudent(studentUsernameAdd)">+</md-button>
+            </div>
+            <div class="flex_row">
+              <md-input-container class ="removeMarginsAndPaddingInput"  flex-gt-sm>
+                  <label>Remove by username</label>
+                  <input ng-model="studentUsernameRemove">
+              </md-input-container>
+              <md-button class="redButton" ng-click="removeStudent(studentUsernameRemove)">-</md-button>
+            </div>
+          </div> -->
+        </md-card-content>
             <!-- Submit Card  - the card to submit a new Project-->
             <div class= 'flex_col titlecard'>
-							<div class = "flex_row spaceInbetween">
-								<button ng-if="main.user_type == 'Admin' && !project.reviewed" ng-click="approve()">Approve</button>
-								<button ng-if="main.user_type == 'Admin'" ng-click="edit()">Edit</button>
-							</div>
+
+              <hr ng-if="main.user_type == 'Admin'">
                 <div class="flex_row justifyCenter">
 										<span class="md-title">{{project.title}}</span>
                 </div>
@@ -33,28 +56,25 @@
 										<div class= "table_left">{{project.contact_number}}</div>
 									</div>
 									</div>
-									<hr>
-									<div class= 'flex_row like_bar'>
-									<i class="fa fa-heart like" aria-hidden="true" ng-click="like()"></i>
-									<!-- PROBLEM HERE! WE NEED TO MAKE THIS INTO A STRING! -->
-									<div class = 'ellipsizedText ellipsis table_left'>{{like_string}}</div>
+									<div>Assigned students:</div>
+                  <div class="marging-left">{{assignedString}}</div>
+									<!-- <div ng-repeat="student in project.assigned_students">
+										<span>{{student}} </span>
+									</div> -->
+                  <div ng-if="main.user_type == 'Student' && project.reviewed"  class= 'flex_row like_bar'>
+                    <md-button class='orangeButton' ng-click='sendMail("mike@codenow.com","CodeNow: Apply to " + project.title,"Student with username " + main.login_name + " is applying to be part of the " + project.title + " team. (Be sure not to remove this line!)")'>Apply</md-button>
 									</div>
-									<hr>
-									<div ng-if="main.user_type == 'Admin' && project.reviewed">Project Approved</div>
-									<div ng-if="main.user_type == 'Admin' && !project.reviewed">Project Not Yet Approved</div>
-									<div ng-if="main.user_type == 'Admin' &&  project.reviewed">
-                    <div> Assign students to this project!</div>
-                      <md-input-container class ="removeMarginsAndPaddingInput" flex-gt-sm>
-                          <label>Assign by username</label>
-                          <input ng-model="studentUsernameAdd">
-                      </md-input-container>
-											<button ng-click="addStudent(studentUsernameAdd)">+</button>
-                      <md-input-container class ="removeMarginsAndPaddingInput"  flex-gt-sm>
-                          <label>Remove by username</label>
-                          <input ng-model="studentUsernameRemove">
-                      </md-input-container>
-											<button ng-click="removeStudent(studentUsernameRemove)">-</button>
-									</div>
+                  <div class="flex_col assignments" ng-if="main.user_type == 'Admin' &&  project.reviewed">
+                      <div class="text-center"> Assign students to this project!</div>
+                        <md-input-container class ="removeMarginsAndPaddingInput" flex-gt-sm>
+                            <label>Assign by username</label>
+                            <input ng-model="studentUsername">
+                        </md-input-container>
+                      <div class="flex_row ">
+                        <md-button class="blueButton" ng-click="assignStudent(studentUsername)">+</md-button>
+                        <md-button class="redButton" ng-click="removeStudent(studentUsername)">-</md-button>
+                      </div>
+                    </div>
             </md-card-content>
         </md-card>
     </div>

@@ -15,7 +15,7 @@ cs50App.controller('signupController', ['$scope', '$rootScope', '$routeParams', 
         $scope.register = function() {
             $scope.logout.style.display = "block";
             // Check for missing fields
-            if (!$scope.newLogin || !$scope.newPass || !$scope.newFirst || !$scope.newLast) {
+            if (!$scope.newLogin || !$scope.newPass || !$scope.newFirst || !$scope.newLast || !$scope.newEmail || !$scope.radioValue) {
                 window.alert("Missing Fields.");
 
                 // Check to make sure the password and confirmed password fields match
@@ -26,9 +26,11 @@ cs50App.controller('signupController', ['$scope', '$rootScope', '$routeParams', 
                 // Post - /user
                 var userRes = $resource("/user");
                 userRes.save({login_name: $scope.newLogin, password: $scope.newPass, first_name: $scope.newFirst,
-                    last_name: $scope.newLast, user_type: $scope.radioValue}, function (model) {
+                    last_name: $scope.newLast, user_type: $scope.radioValue, email: $scope.newEmail}, function (model) {
 
                     $scope.main.loggedInUser = $scope.newFirst + " " + $scope.newLast;
+                    $scope.main.user_type = $scope.radioValue;
+                    $scope.main.login_name = $scope.newLogin;
 
                     // Alert successful registration
                     window.alert("Successfully registered! Logging In!");
@@ -53,8 +55,7 @@ cs50App.controller('signupController', ['$scope', '$rootScope', '$routeParams', 
                     });
 
                 }, function errorHandling(err) {
-                    window.alert("Invalid Login. Please Try Again.");
-                    console.log(err.data);  // console.log prints to the console in the browser.
+                    window.alert(err.data);  // console.log prints to the console in the browser.
                 });
             }
         };
