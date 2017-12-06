@@ -6,7 +6,6 @@
             <div class= 'flex_col titlecard'>
 							<div class = "flex_row spaceInbetween">
 								<button ng-if="main.user_type == 'Admin' && !project.reviewed" ng-click="approve()">Approve</button>
-								<button ng-if="main.user_type == 'Admin' && project.reviewed" ng-click="assign()">Assign Students</button>
 								<button ng-if="main.user_type == 'Admin'" ng-click="edit()">Edit</button>
 							</div>
                 <div class="flex_row justifyCenter">
@@ -43,6 +42,16 @@
 									<hr>
 									<div ng-if="main.user_type == 'Admin' && project.reviewed">Project Approved</div>
 									<div ng-if="main.user_type == 'Admin' && !project.reviewed">Project Not Yet Approved</div>
+									<div ng-if="main.user_type == 'Admin' &&  project.reviewed">
+										<div>
+											Assign a student by username: <input type="text" ng-model="studentUsernameAdd">
+											<button ng-click="addStudent(studentUsernameAdd)"></button>
+										</div>
+										<div>
+											Remove a student by username: <input type="text" ng-model="studentUsernameRemove">
+											<button ng-click="removeStudent(studentUsernameRemove)"></button>
+										</div>
+									</div>
             </md-card-content>
         </md-card>
     </div>
