@@ -17,7 +17,8 @@ var userSchema = new mongoose.Schema({
     last_name: String,  // Last name of the user.
     login_name: String,		// login_name of the user.
     email: String,			// email of the user
-    password: String		// password of the user.
+    password: String,		// password of the user.
+    projects: [String]		// projects the user is assigned too
 });
 
 // the schema is useless so far
