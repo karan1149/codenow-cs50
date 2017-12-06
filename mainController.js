@@ -23,8 +23,8 @@ cs50App.config(['$routeProvider',
                 controller: 'SubmitController'
             }).
             when('/signup', {
-            templateUrl: 'components/signup/signupTemplate.html',
-            controller: 'signupController'
+                templateUrl: 'components/signup/signupTemplate.html',
+                controller: 'signupController'
              }).
             when('/project/:projectId', {
                 templateUrl: 'components/project/projectTemplate.html',
@@ -37,6 +37,10 @@ cs50App.config(['$routeProvider',
             when('/profile/private', {
                 templateUrl: 'components/editableProfile/editableTemplate.html',
                 controller: 'privateProfileController'
+            }).
+            when('/projects/:projectId/edit', {
+                templateUrl: 'components/submit/submit.html',
+                controller: 'EditController'  
             }).
             otherwise({
                 redirectTo: '/home'
