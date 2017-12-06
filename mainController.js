@@ -42,7 +42,7 @@ cs50App.config(['$routeProvider',
                 templateUrl: 'components/submit/submit.html',
                 controller: 'EditController'
             }).
-            when('editUser', {
+            when('/editUser', {
                 templateUrl: 'components/editUser/editUser.html',
                 controller: 'EditUserController'
             }).

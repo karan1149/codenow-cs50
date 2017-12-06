@@ -19,8 +19,9 @@ function ($scope, $rootScope, $routeParams, $resource) {
     window.location = "#!/editUser";
   };
 
-  $scope.go = function ( projectId ) {
+  $scope.go = function (projectId) {
     let path = '/project/' +  projectId;
     $location.path( path );
   };
+
 }]);

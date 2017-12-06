@@ -6,36 +6,28 @@ cs50App.controller('EditUserController', ['$scope', '$rootScope', '$routeParams'
 
         // We use Scope Variables so that Angular can update these for us as the user is typing in them. See loginTemplate.html
 
-        $scope.editUser.email;
-        $scope.editUser.contact_number;
+        $scope.email;
+        $scope.contact_number;
 
-/*
-        var contact_info = request.body.contact_info // contact info of community member
-        var description = request.body.description  // description of the project
-        var community_member = request.body.community_member // community who created project
-        var tag = request.body.tag  // tag associated with the project
-        var title = request.body.title // title of the project
-*/
         // Register a new user - function is called upon Register button being clicked
-        /*
+
         $scope.submitClick = function() {
 
             // Check for missing fields
-            if (!$scope.editUser.email || !$scope.editUser.contact_number) {
+            if (!$scope.contact_number || !$scope.email) {
                 window.alert("Missing Fields.");
 
             } else {
-
                 // Post - /user
-                //var userRes = $resource("/");
+                var userRes = $resource("/projects/new");
                 var obj = {contact_number: $scope.contact_number, email: $scope.email};
                 console.log(obj)
-              //  userRes.save(obj, function (data, headers, status) {
+                userRes.save(obj, function (data, headers, status) {
 
 
                     // Alert successful submission
-                    window.alert("Successfully edited profile: " + $scope.main.loggedInUser);
-                    $location.path('/profile/private');
+                window.alert("Successfully edited contact name/email: ");
+                $location.path('/profile/private');
                     /*
                     $scope.main.loggedInUser = $scope.community_member;
 
@@ -58,13 +50,10 @@ cs50App.controller('EditUserController', ['$scope', '$rootScope', '$routeParams'
                         window.alert(err.data);
                     });
                     */
-                    /*
                 }, function errorHandling(err) {
                     window.alert("Invalid Submission. Please Try Again.");
                     console.log(err.data);  // console.log prints to the console in the browser.
                 });
             }
         };
-        */
-
     }]);
