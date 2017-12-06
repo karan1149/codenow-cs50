@@ -1,13 +1,51 @@
 <div id = "login">
-	<md-content layout = "column">
-    	<div>
+  <div id='logobox'>
+    <img class="codenowlogo" src ='../../images/codenow%20logo%20large.png' /> </div>
+	<md-content layout="row">
 
+
+
+          <div flex="60" class="landing-card-container">
+
+            <!-- Landing page card -->
+
+            <md-card class="landing-card" class="codenow-landing">
+                <md-card-header>
+              
+                    <md-card-header-text>
+                        <span class="md-title">Connecting Community Causes with CodeNow Students</span>
+                    </md-card-header-text>
+                </md-card-header>
+
+                <md-card-header-text class="codenow-graphic-container">
+                    <img class="codenow-graphic" src ='../../images/codenow-giving-graphic.png' />
+                </md-card-header-text>
+
+                <md-card-header-text>
+                    
+                </md-card-header-text>
+                <div layout="row">
+                  <div flex class="subsection">
+                    <h3>Causes</h3>
+                    <p>Use our platform to post projects for CodeNow students to complete. You will be able to view their progress along the way.</p>
+                  </div>
+                  
+                  <div flex class="subsection">
+                    <h3>Students</h3>
+                    <p>Use our platform to get more experience coding and complete social-good projects while you do it. </p>
+                  </div>
+                  
+                </div>
+           </md-card>
+
+          </div>
+
+
+    	<div flex="40" class="login-card-container">
     		<!-- Login Card - the top card on /login used to log in users -->
-    		<md-card id = "loginCard">
+    		<md-card class="login-card">
       			<md-card-header>
-					<!--<div class="codeNowTitle">-->
-						<!--<img class= "codenowlogo" src ='../../images/codenow%20logo%20large.png' />-->
-					<!--</div>-->
+					
             		<md-card-header-text>
                 		<span class="md-title">Login</span>
             		</md-card-header-text>
@@ -25,11 +63,11 @@
       			</md-input-container>
 
             <!-- Login Button -->
-      			<md-input-container>
-    					<div layout="row">
+      			<md-input-container class="login-container">
+    					<div layout="row" class="login-button">
     						<md-button class="md-flat md-primary" ng-click="loginClick()">Login</md-button>
     					</div>
-							<md-button ng-href="#!/signup">Don't have an account? Sign up</md-button>
+							<md-button ng-href="#!/signup">No account? Sign up</md-button>
     				</md-input-container>
 			 </md-card>
 
