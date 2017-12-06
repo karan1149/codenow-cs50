@@ -9,9 +9,11 @@
 		<div class= "table_left">{{project.contact_number}}</div>
 
 	</div>
-	<button ng-click="edit()">Edit</button>
-	<hr>
+
 </div>
+
+<button ng-click="edit()">Edit</button>
+<hr>
 
 <div class="projectsBot scrollable">
 	<div class="project" ng-repeat="project in userProjects" ng-click= "go(project._id)" >

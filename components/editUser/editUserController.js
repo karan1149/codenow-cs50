@@ -5,6 +5,7 @@ cs50App.controller('EditUserController', ['$scope', '$rootScope', '$routeParams'
     function ($scope, $rootScope, $routeParams, $resource, $location) {
 
         // We use Scope Variables so that Angular can update these for us as the user is typing in them. See loginTemplate.html
+
         $scope.editUser.email;
         $scope.editUser.contact_number;
 
@@ -16,6 +17,7 @@ cs50App.controller('EditUserController', ['$scope', '$rootScope', '$routeParams'
         var title = request.body.title // title of the project
 */
         // Register a new user - function is called upon Register button being clicked
+        /*
         $scope.submitClick = function() {
 
             // Check for missing fields
@@ -56,10 +58,13 @@ cs50App.controller('EditUserController', ['$scope', '$rootScope', '$routeParams'
                         window.alert(err.data);
                     });
                     */
+                    /*
                 }, function errorHandling(err) {
                     window.alert("Invalid Submission. Please Try Again.");
                     console.log(err.data);  // console.log prints to the console in the browser.
                 });
             }
         };
+        */
+
     }]);

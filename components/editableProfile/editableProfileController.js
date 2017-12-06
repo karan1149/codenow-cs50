@@ -8,6 +8,8 @@ function ($scope, $rootScope, $routeParams, $resource) {
       console.log(model);
       console.log(model.projects);
       $scope.userProjects = [];
+      //$scope.user.email = model.email;
+      //$scope.user.contact = 
   });
 
   $scope.edit = function() {
