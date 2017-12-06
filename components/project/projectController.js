@@ -62,6 +62,24 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$
       window.location = "#!/projects/" + $scope.project._id + "/edit";
     };
 
+    $scope.assignStudent = function (student) {
+      var assignStudentResource = $resource("/projects/:projectId/assign/:studentUsername");
+      assignStudentResource.post({projectId: projectId, studentUsername: student}, function (data) {
+        window.alert("Student " + + " successfully assigned!")
+      }, function (err) {
+        window.alert(err);
+      });
+    };
+
+    $scope.removeStudent = function (student) {
+      var removeStudentResource = $resource("/projects/:projectId/remove/:studentUsername");
+      removeStudentResource.post({projectId: projectId, studentUsername: student}, function (data) {
+        window.alert("Student " + + " successfully removed!")
+      }, function (err) {
+        window.alert(err);
+      });
+    };
+
 
 /* project will have the following attributes:
 

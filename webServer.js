@@ -138,7 +138,7 @@ app.get('/user/:login_name', function (request, response) {
     var param = request.params.login_name;
 
     // Search for single id and return user + relevant information
-    User.findOne({login_name: param}, 'first_name last_name', function (err, user) {
+    User.findOne({login_name: param}, function (err, user) {
         if (!err) {
             response.end(JSON.stringify(user));
         } else {
@@ -180,7 +180,7 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
         response.status(400).send(user.login_name + " is not an admin");
         return;
     }
-    
+
     var projectId = request.params.projectId
 
     Project.findOne({_id: projectId}, function (err, project) {
