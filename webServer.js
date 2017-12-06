@@ -161,6 +161,7 @@ app.get('/projectlist/', function(request, response) {
     Project.find({reviewed: true}, function (err, projects) {
         if (err){
             response.status(400).send(err);
+            return;
         }
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);
@@ -171,7 +172,7 @@ app.get('/projectlist/', function(request, response) {
 /*
  * POST Request to assign a particular student to a project
  */
-app.post('/projects/:projectId/assign/:studentUsername', function (request, response) {
+app.post('/projects/:projectId/assign/:student_login_name', function (request, response) {
     if (request.session._id === undefined) {
         response.status(401).send('No one logged in');
         return;
@@ -186,20 +187,30 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
 
     Project.findOne({_id: projectId}, function (err, project) {
         if (err) {
-            console.log(1)
-            response.status(400).send("err in proj");
+            response.status(400).send(err);
+            return;
         }
 
 
-        var studentUsername = request.params.studentUsername
+        var login_name = request.params.student_login_name
 
-        User.findOne({userName: studentUsername}, function (err2, student) {
+        User.findOne({login_name: login_name}, function (err2, student) {
             if (err2) {
-                console.log(2)
-                response.status(400).send("err in stud");
+                response.status(400).send(err2);
+                return;
             }
 
-            project.assigned_students.push(studentUsername);
+            if (student === null) {
+                response.status(400).send("Invalid student login name")
+                return;
+            }
+
+            if (project.assigned_students.indexOf(login_name) !== -1) {
+                response.status(400).send(login_name + " already assigned to project")
+                return;
+            }
+
+            project.assigned_students.push(login_name);
             project.save();
             student.projects.push(projectId);
             student.save();
@@ -211,7 +222,7 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
 /*
  * POST Request to remove a particular student to a project
  */
-app.post('/projects/:projectId/remove/:studentUsername', function (request, response) {
+app.post('/projects/:projectId/remove/:student_login_name', function (request, response) {
     if (request.session._id === undefined) {
         response.status(401).send('No one logged in');
         return;
@@ -228,16 +239,22 @@ app.post('/projects/:projectId/remove/:studentUsername', function (request, resp
     Project.findOne({_id: projectId}, function (err, project) {
         if (err) {
             response.status(400).send(err);
+            return;
         }
 
-        var studentUsername = request.params.studentUsername
+        var login_name = request.params.student_login_name
 
-        User.findOne({userName: studentUsername}, function (err2, student) {
+        User.findOne({login_name: login_name}, function (err2, student) {
             if (err2) {
                 response.status(400).send(err);
+                return;
             }
+            if (student === null || project.assigned_students.indexOf(login_name) === -1) {
+                response.status(400).send("student " + login_name + " is not assigned to the project");
+                return;
+            } 
 
-            project.assigned_students.splice(project.assigned_students.indexOf(studentUsername), 1);
+            project.assigned_students.splice(project.assigned_students.indexOf(login_name), 1);
             project.save();
             student.projects.splice(student.projects.indexOf(projectId), 1);
             student.save();
