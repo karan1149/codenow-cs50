@@ -62,7 +62,7 @@ app.use(express.static(__dirname));
 /*******************************     REST API Back End CALLS     ********************************/
 /************************************************************************************************/
 /*
- * Example #1: Simple GET Request
+ * Simple GET Request
  * When making an AJAX GET request to the path '/', the web server responds with a simple message.
  */
 app.get('/', function (request, response) {
@@ -71,7 +71,7 @@ app.get('/', function (request, response) {
 
 
 /*
- * Example #3: GET Request Checking for Logged In Status
+ * GET Request Checking for Logged In Status
  * Checking if there is a currently logged in user as specified by session variable
  */
 app.post('/admin/status', function(request, response) {
@@ -83,7 +83,7 @@ app.post('/admin/status', function(request, response) {
 });
 
 /*
- * Example #4: POST Request Logging in User
+ * POST Request Logging in User
  */
 app.post('/admin/login', function (request, response) {
 	// Get login_name and password
@@ -109,7 +109,7 @@ app.post('/admin/login', function (request, response) {
 });
 
 /*
- * Example #5: POST Request Logging OUT User
+ * POST Request Logging OUT User
  */
 app.post('/admin/logout', function (request, response) {
 	// delete attributes of session
@@ -128,8 +128,7 @@ app.post('/admin/logout', function (request, response) {
 });
 
 /*
- * Example #7 - Return the information for specified User (based on Login_Name)
- * URL Parameter instead of request variable!
+ * GET Request for the information for specified User (based on Login_Name)
  */
 app.get('/user/:login_name', function (request, response) {
     if (request.session._id === undefined) {
@@ -142,6 +141,8 @@ app.get('/user/:login_name', function (request, response) {
     // Search for single id and return user + relevant information
     User.findOne({login_name: param}, function (err, user) {
         if (!err) {
+            user = JSON.parse(JSON.stringify(user));
+            delete user.password;
             response.end(JSON.stringify(user));
         } else {
             response.status(400).send("Error");
@@ -471,27 +472,6 @@ app.post('/user', function(request, response) {
     });
 });
 
-/*
- * Example #7 - Return the information for specified User (based on Login_Name)
- * URL Parameter instead of request variable!
- */
-app.get('/user/:login_name', function (request, response) {
-    if (request.session._id === undefined) {
-        response.status(401).send('No one logged in');
-        return;
-    }
-
-	var param = request.params.login_name;
-
-	// Search for single id and return user + relevant information
-	User.findOne({login_name: param}, 'first_name last_name', function (err, user) {
-		if (!err) {
-			response.end(JSON.stringify(user));
-		} else {
-			response.status(400).send("Error");
-		}
-	});
-});
 
 /*
  * POST request to set the reviewed status of a project
