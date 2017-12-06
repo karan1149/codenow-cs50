@@ -28,7 +28,6 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
 
             // Signal that user is successfully logging in
             $scope.loggingIn();
-            console.log(model)
 
             // Set window location
             var next = "#/users/" + model._id;
@@ -36,7 +35,6 @@ cs50App.controller('LoginController', ['$scope', '$rootScope', '$routeParams', '
 
             // Set logged in user. Notice how the scope.main.loggedInUser variables can be used across different files!
             $scope.main.loggedInUser = model.first_name + " " + model.last_name;
-            console.log(model);
             $scope.main.user_type = model.user_type;
             $scope.main.login_name = model.login_name;
 

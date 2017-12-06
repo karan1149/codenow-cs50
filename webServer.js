@@ -120,7 +120,7 @@ app.post('/admin/logout', function (request, response) {
     // DESTROY EVERYTHINGGGGGGG
     request.session.destroy(function (err) {
     	if (!err) {
-    		response.status(200).end("Success");
+    		response.status(200).send("Success");
     	} else {
     		response.status(400).send("Error");
     	}
@@ -136,14 +136,14 @@ app.get('/user/:login_name', function (request, response) {
         return;
     }
 
-    var param = request.params.login_name;
+    var login_name = request.params.login_name;
 
-    // Search for single id and return user + relevant information
-    User.findOne({login_name: param}, function (err, user) {
-        if (!err) {
+    // Search for single id and return relevant information
+    User.findOne({login_name: login_name}, function (err, user) {
+        if (!err && user) {
             user = JSON.parse(JSON.stringify(user));
             delete user.password;
-            response.end(JSON.stringify(user));
+            response.status(200).send(JSON.stringify(user));
         } else {
             response.status(400).send("Error");
         }
@@ -434,7 +434,7 @@ app.post('/user', function(request, response) {
 
 		// If no User with login_name exists yet and no Error, create new User
     	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null && user_type !== null) {
-    		User.create({
+            User.create({
                 user_type: user_type,
             	first_name: first_name,
             	last_name: last_name,

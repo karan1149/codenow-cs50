@@ -42,7 +42,7 @@
 									<hr>
 									<div ng-if="main.user_type == 'Admin' && project.reviewed">Project Approved</div>
 									<div ng-if="main.user_type == 'Admin' && !project.reviewed">Project Not Yet Approved</div>
-									<div>Assigned students</div>
+									<div>Assigned students:</div>
 									<div ng-repeat="student in project.assigned_students">
 										<span>{{student}} </span>
 									</div>
