@@ -11,6 +11,11 @@
 	text-align:center;
 }
 
+.login-text {
+	color: rgb(238, 49, 36);
+	font-weight: bold;
+}
+
 .codenowlogo {
 	margin-top: 25px;
 	max-width: 100%;
@@ -82,8 +87,12 @@
 .login-container {
 	text-align:right;
 	display:block;
+	color: #026EA6;
 }
 
+.login-container .md-button {
+	color: #026EA6;
+}
 .md-title {
 	font-size:30px;
 }
