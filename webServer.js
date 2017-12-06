@@ -71,24 +71,6 @@ app.get('/', function (request, response) {
 
 
 /*
- * Example #2: GET Request Querying MongoDB
- * This request retrieves a list of all data points stored in our MongoDB
- */
-app.get('/data/all', function (request, response) {
-
-	var search = Data.find({});
-
-	// Query to only get first_name, last_name, and id attributes.
-	search.select("message date").exec(function (err, data_points) {
-		if (!err) {
-			response.status(200).end(JSON.stringify(data_points));
-		} else {
-			response.status(501).send("Error");
-		}
-	});
-});
-
-/*
  * Example #3: GET Request Checking for Logged In Status
  * Checking if there is a currently logged in user as specified by session variable
  */
@@ -148,6 +130,11 @@ app.post('/admin/logout', function (request, response) {
  * URL Parameter instead of request variable!
  */
 app.get('/user/:login_name', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
     var param = request.params.login_name;
 
     // Search for single id and return user + relevant information
@@ -164,6 +151,11 @@ app.get('/user/:login_name', function (request, response) {
  * GET Request for all the projects
  */
 app.get('/projectlist/', function(request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
     Project.find(function (err, projects) {
         if (err){
             response.status(400).send(err);
@@ -178,6 +170,17 @@ app.get('/projectlist/', function(request, response) {
  * POST Request to assign a particular student to a project
  */
 app.post('/projects/:projectId/assign/:studentUsername', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    if (user.user_type !== "Admin") {
+        console.log(user.login_name + " is not an admin");
+        response.status(400).send(user.login_name + " is not an admin");
+        return;
+    }
+    
     var projectId = request.params.projectId
 
     Project.findOne({_id: projectId}, function (err, project) {
@@ -205,6 +208,17 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
  * POST Request to remove a particular student to a project
  */
 app.post('/projects/:projectId/remove/:studentUsername', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    if (user.user_type !== "Admin") {
+        console.log(user.login_name + " is not an admin");
+        response.status(400).send(user.login_name + " is not an admin");
+        return;
+    }
+
     var projectId = request.params.projectId
 
     Project.findOne({_id: projectId}, function (err, project) {
@@ -283,16 +297,16 @@ app.get('/underReview/', function(request, response) {
         return;
     }
 
+    if (user.user_type !== "Admin") {
+        console.log(user.login_name + " is not an admin");
+        response.status(400).send(user.login_name + " is not an admin");
+        return;       
+    }
+
     User.findOne({_id: request.session._id}, function (err, user) {
         console.log(user)
         if (err) {
             response.status(400).send(err);
-            return;
-        }
-
-        if (user.user_type !== "Admin") {
-            console.log(user.login_name + " is not an admin");
-            response.status(400).send(user.login_name + " is not an admin");
             return;
         }
 
@@ -449,6 +463,11 @@ app.post('/user', function(request, response) {
  * URL Parameter instead of request variable!
  */
 app.get('/user/:login_name', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
 	var param = request.params.login_name;
 
 	// Search for single id and return user + relevant information
