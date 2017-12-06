@@ -45,9 +45,20 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$
     }
 
     $scope.sendMail = function(emailId,subject,message){
-      console.log(emailId)
+      console.log(emailId);
       $window.open("mailto:"+ emailId + "?subject=" + subject+"&body="+message,"_self");
     };
+
+    $scope.review = function () {
+      var reviewResource = $resource('/projects/' + $scope.project._id + '/update');
+      $scope.project.reviewed = true
+      reviewResource.save($scope.project, function (model) {
+        window.alert("Successfully reviewed");
+      }, function (err) {
+        window.alert(err.data);
+      });
+    };
+
 
 /* project will have the following attributes:
 
