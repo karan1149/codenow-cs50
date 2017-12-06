@@ -63,18 +63,20 @@ cs50App.controller('projectController', ['$scope','$routeParams','$resource', '$
     };
 
     $scope.assignStudent = function (student) {
-      var assignStudentResource = $resource("/projects/:projectId/assign/:studentUsername");
-      assignStudentResource.post({projectId: projectId, studentUsername: student}, function (data) {
-        window.alert("Student " + + " successfully assigned!")
+      console.log("/projects/" + projectId + "/assign/" + student);
+      var assignStudentResource = $resource("/projects/" + projectId + "/assign/" + student);
+      assignStudentResource.save({}, function (model){
+        window.alert("Student " + student + " successfully assigned!")
       }, function (err) {
+        console.log(err);
         window.alert(err);
       });
     };
 
     $scope.removeStudent = function (student) {
       var removeStudentResource = $resource("/projects/:projectId/remove/:studentUsername");
-      removeStudentResource.post({projectId: projectId, studentUsername: student}, function (data) {
-        window.alert("Student " + + " successfully removed!")
+      removeStudentResource.save({projectId: projectId, studentUsername: student}, function (model) {
+        window.alert("Student " + student + " successfully removed!")
       }, function (err) {
         window.alert(err);
       });
