@@ -14,8 +14,8 @@ var mongoose = require('mongoose');
 var projectSchema = new mongoose.Schema({
 	email: String, //email of the community member
 	contact_number: String, //contact number of the community member
-	liked_students: [String], // students who have liked the project
-	liked_student_names: [String],
+	// liked_students: [String], // students who have liked the project
+	// liked_student_names: [String],
 	assigned_students: [String], // students who have been assigned to the project
 	description: String,  // description of the project
 	community_member: String,  // community who created project
