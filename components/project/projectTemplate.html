@@ -49,8 +49,8 @@
 									<div class = 'ellipsizedText ellipsis table_left'>{{like_string}}</div>
 									</div>
 									<hr>
-									<div ng-if="project.reviewed">Project Approved</div>
-									<div ng-if="!project.reviewed">Project Not Yet Approved</div>
+									<div ng-if="main.user_type == 'Admin' && project.reviewed">Project Approved</div>
+									<div ng-if="main.user_type == 'Admin' && !project.reviewed">Project Not Yet Approved</div>
             </md-card-content>
         </md-card>
     </div>
