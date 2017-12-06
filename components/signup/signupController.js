@@ -13,7 +13,7 @@ cs50App.controller('signupController', ['$scope', '$rootScope', '$routeParams', 
 
         // Register a new user - function is called upon Register button being clicked
         $scope.register = function() {
-            $scope.logout.style.visibility = "hidden";
+            $scope.logout.style.display = "block";
             // Check for missing fields
             if (!$scope.newLogin || !$scope.newPass || !$scope.newFirst || !$scope.newLast) {
                 window.alert("Missing Fields.");

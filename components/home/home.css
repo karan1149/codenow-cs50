@@ -12,6 +12,7 @@
 	height: 15vh;
 	display: flex;
 	flex-direction: column;
+	width : 100%;
 }
 
 .project:first-child {

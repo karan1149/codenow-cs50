@@ -55,6 +55,7 @@
 
         <!-- The first element in the body is a row containing the top toolbar of the app. -->
         <!--New tool bar-->
+      <div class="loggedInToolBar">
         <div class="toolbar">
             <div class="dropdown">
                 <button class="dropbtn"><img src="./images/ic_settings_black_24px.svg"/></button>
@@ -64,6 +65,18 @@
             </div>
             <button class="account"><a ng-href="#!/profile/private"><img src="./images/ic_account_circle_black_24px.svg"/></a></button>
         </div>
+        <div class='topBar'>
+        	<div class="codeNowTitle">
+        		<img class= "codenowlogo" src ='../../images/codenow%20logo%20large.png' />
+        	</div>
+        	<div class="navRow">
+        			<a class="submit NavButtons" ng-href="#!/projects/new">submit</a>
+        			<a class="projects NavButtons" ng-href="#!/home">projects</a>
+        			<a ng-if="main.user_type == 'Admin'" ng-href="#!/review">review</a>
+        	</div>
+        </div>
+      </div>
+
         <!-- The next element is a div that utilizes ng-content to dynamically change what HTML it shows (refer to mainController.js line 6-20). -->
         <div class="container" flex layout="row">
             <!-- content managed by ngRoute -->
