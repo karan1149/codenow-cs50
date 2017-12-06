@@ -37,12 +37,9 @@
 .like:hover{
   color:red;
 }
+
 .ellipsizedTest:hover{
     overflow: visible;
     white-space: normal;
     height:auto;  /* just added this line */
-}
-
-.like_bar {
-  padding: 1% 0;
 }
