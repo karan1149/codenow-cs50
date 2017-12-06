@@ -1,25 +1,7 @@
-<div class= "md-title">{{main.loggedInUser}}</div>
-
-<div class= 'contactclass'>
-	<div class = "flex_row">
-		<img src="../images/ic_email_black_24px.svg"/>
-		<div class = 'emailTo table_left'>{{project.email}} </div>
-
-		<img src="../images/ic_phone_black_24px.svg"/>
-		<div class= "table_left">{{project.contact_number}}</div>
-
-	</div>
-
-</div>
-
-<button ng-click="edit()">Edit</button>
-<hr>
-
 <div class="projectsBot scrollable">
 	<div class="project" ng-repeat="project in userProjects" ng-click= "go(project._id)" >
 			<div class="projRow">
 				<span class="projectTitle ellipsis">{{project.title}} </span>
-				<span class="subdate">18/11/2017</span>
 			</div>
 			<span class="ellipsizedText ellipsis"><i>Description: </i>{{project.description}} </span>
 			<div class="projRow">
