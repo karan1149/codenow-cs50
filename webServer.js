@@ -160,7 +160,6 @@ app.post('/user/:login_name/update', function (request, response) {
     }
 
     var login_name = request.params.login_name;
-    var password = request.body.password;
     var first_name = request.body.first_name;
     var last_name = request.body.last_name;
     var email = request.body.email;
@@ -176,9 +175,6 @@ app.post('/user/:login_name/update', function (request, response) {
             }
             if (email) {
                 user.email = email;
-            }
-            if (password) {
-                user.password = password; 
             }
             user.save();
             response.status(200).send("Updated User")
