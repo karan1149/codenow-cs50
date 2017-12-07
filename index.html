@@ -50,6 +50,10 @@
         <script src="components/underReview/underReviewController.js"></script>
         <link rel="stylesheet" type="text/css" href="components/underReview/underReview.css" />
 
+        <!-- Added edit user view page controller view and css -->
+        <script src="components/editUser/editUserController.js"></script>
+        <link rel="stylesheet" type="text/css" href="components/editUser/editUser.css" />
+
         <script src="./node_modules/angular-resource/angular-resource.js"  type="text/javascript" ></script>
     </head>
 
@@ -64,9 +68,9 @@
                 <button class="dropbtn"><img src="./images/ic_settings_black_24px.svg"/></button>
                 <div class="dropdown-content">
                     <a ng-click="logoutClicked()">Logout</a>
+                    <a ng-href="#!/editUser">Edit profile</a>
                 </div>
             </div>
-            <button class="account"><a ng-href="#!/profile/private"><img src="./images/ic_account_circle_black_24px.svg"/></a></button>
         </div>
         <div class='topBar'>
         	<div class="codeNowTitle">
@@ -75,7 +79,8 @@
         	<div class="navRow">
         			<a class="NavButtons" ng-href="#!/projects/new">submit</a>
         			<a class="NavButtons" ng-href="#!/home">projects</a>
-        			<a class="NavButtons" ng-if="main.user_type == 'Admin'" ng-href="#!/review">review</a>
+        			<a class="NavButtons" ng-if="main.user_type == 'Admin'" ng-href="#!/review">approve</a>
+              <a class="NavButtons" ng-if="main.user_type == 'Student'"   ng-href="#!/profile/private"> my projects </a>
         	</div>
         </div>
       </div>

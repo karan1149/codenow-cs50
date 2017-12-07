@@ -62,7 +62,7 @@ app.use(express.static(__dirname));
 /*******************************     REST API Back End CALLS     ********************************/
 /************************************************************************************************/
 /*
- * Example #1: Simple GET Request
+ * Simple GET Request
  * When making an AJAX GET request to the path '/', the web server responds with a simple message.
  */
 app.get('/', function (request, response) {
@@ -71,7 +71,7 @@ app.get('/', function (request, response) {
 
 
 /*
- * Example #3: GET Request Checking for Logged In Status
+ * GET Request Checking for Logged In Status
  * Checking if there is a currently logged in user as specified by session variable
  */
 app.post('/admin/status', function(request, response) {
@@ -83,7 +83,7 @@ app.post('/admin/status', function(request, response) {
 });
 
 /*
- * Example #4: POST Request Logging in User
+ * POST Request Logging in User
  */
 app.post('/admin/login', function (request, response) {
 	// Get login_name and password
@@ -95,6 +95,7 @@ app.post('/admin/login', function (request, response) {
     	if (!err && user !== null && password === user.password) {
     		request.session.login_name = user.login_name;
             request.session._id = user._id;
+            request.session.user_type = user.user_type;
     		response.status(200).end(JSON.stringify(user));
     	// Error handling
     	} else if (user === null) {
@@ -108,17 +109,18 @@ app.post('/admin/login', function (request, response) {
 });
 
 /*
- * Example #5: POST Request Logging OUT User
+ * POST Request Logging OUT User
  */
 app.post('/admin/logout', function (request, response) {
 	// delete attributes of session
     delete request.session.login_name;
     delete request.session._id;
+    delete request.session.user_type;
 
     // DESTROY EVERYTHINGGGGGGG
     request.session.destroy(function (err) {
     	if (!err) {
-    		response.status(200).end("Success");
+    		response.status(200).send("Success");
     	} else {
     		response.status(400).send("Error");
     	}
@@ -126,8 +128,7 @@ app.post('/admin/logout', function (request, response) {
 });
 
 /*
- * Example #7 - Return the information for specified User (based on Login_Name)
- * URL Parameter instead of request variable!
+ * GET Request for the information for specified User (based on Login_Name)
  */
 app.get('/user/:login_name', function (request, response) {
     if (request.session._id === undefined) {
@@ -135,12 +136,48 @@ app.get('/user/:login_name', function (request, response) {
         return;
     }
 
-    var param = request.params.login_name;
+    var login_name = request.params.login_name;
 
-    // Search for single id and return user + relevant information
-    User.findOne({login_name: param}, function (err, user) {
-        if (!err) {
-            response.end(JSON.stringify(user));
+    // Search for single id and return relevant information
+    User.findOne({login_name: login_name}, function (err, user) {
+        if (!err && user) {
+            user = JSON.parse(JSON.stringify(user));
+            delete user.password;
+            response.status(200).send(JSON.stringify(user));
+        } else {
+            response.status(400).send("Error");
+        }
+    });
+});
+
+/*
+ * POST Request to update the information for a specified User (based on Login_Name)
+ */
+app.post('/user/:login_name/update', function (request, response) {
+    if (request.session._id === undefined) {
+        response.status(401).send('No one logged in');
+        return;
+    }
+
+    var login_name = request.params.login_name;
+    var first_name = request.body.first_name;
+    var last_name = request.body.last_name;
+    var email = request.body.email;
+
+    // Search for single id and return relevant information
+    User.findOne({login_name: login_name}, function (err, user) {
+        if (!err && user) {
+            if (first_name){
+                user.first_name = first_name;
+            }
+            if (last_name) {
+                user.last_name = last_name;
+            }
+            if (email) {
+                user.email = email;
+            }
+            user.save();
+            response.status(200).send("Updated User")
         } else {
             response.status(400).send("Error");
         }
@@ -156,9 +193,10 @@ app.get('/projectlist/', function(request, response) {
         return;
     }
 
-    Project.find(function (err, projects) {
+    Project.find({reviewed: true}, function (err, projects) {
         if (err){
             response.status(400).send(err);
+            return;
         }
         projects = JSON.parse(JSON.stringify(projects));
         response.status(200).send(projects);
@@ -169,13 +207,12 @@ app.get('/projectlist/', function(request, response) {
 /*
  * POST Request to assign a particular student to a project
  */
-app.post('/projects/:projectId/assign/:studentUsername', function (request, response) {
+app.post('/projects/:projectId/assign/:student_login_name', function (request, response) {
     if (request.session._id === undefined) {
         response.status(401).send('No one logged in');
         return;
     }
-
-    if (user.user_type !== "Admin") {
+    if (request.session.user_type !== "Admin") {
         console.log(user.login_name + " is not an admin");
         response.status(400).send(user.login_name + " is not an admin");
         return;
@@ -186,16 +223,29 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
     Project.findOne({_id: projectId}, function (err, project) {
         if (err) {
             response.status(400).send(err);
+            return;
         }
 
-        var studentUsername = request.params.studentUsername
 
-        User.findOne({userName: studentUsername}, function (err2, student) {
+        var login_name = request.params.student_login_name
+
+        User.findOne({login_name: login_name}, function (err2, student) {
             if (err2) {
-                response.status(400).send(err);
+                response.status(400).send(err2);
+                return;
             }
 
-            project.assigned_students.push(studentUsername);
+            if (student === null) {
+                response.status(400).send("Invalid student login name")
+                return;
+            }
+
+            if (project.assigned_students.indexOf(login_name) !== -1) {
+                response.status(400).send(login_name + " already assigned to project")
+                return;
+            }
+
+            project.assigned_students.push(login_name);
             project.save();
             student.projects.push(projectId);
             student.save();
@@ -207,13 +257,13 @@ app.post('/projects/:projectId/assign/:studentUsername', function (request, resp
 /*
  * POST Request to remove a particular student to a project
  */
-app.post('/projects/:projectId/remove/:studentUsername', function (request, response) {
+app.post('/projects/:projectId/remove/:student_login_name', function (request, response) {
     if (request.session._id === undefined) {
         response.status(401).send('No one logged in');
         return;
     }
 
-    if (user.user_type !== "Admin") {
+    if (request.session.user_type !== "Admin") {
         console.log(user.login_name + " is not an admin");
         response.status(400).send(user.login_name + " is not an admin");
         return;
@@ -224,16 +274,22 @@ app.post('/projects/:projectId/remove/:studentUsername', function (request, resp
     Project.findOne({_id: projectId}, function (err, project) {
         if (err) {
             response.status(400).send(err);
+            return;
         }
 
-        var studentUsername = request.params.studentUsername
+        var login_name = request.params.student_login_name
 
-        User.findOne({userName: studentUsername}, function (err2, student) {
+        User.findOne({login_name: login_name}, function (err2, student) {
             if (err2) {
                 response.status(400).send(err);
+                return;
+            }
+            if (student === null || project.assigned_students.indexOf(login_name) === -1) {
+                response.status(400).send("student " + login_name + " is not assigned to the project");
+                return;
             }
 
-            project.assigned_students.splice(project.assigned_students.indexOf(studentUsername), 1);
+            project.assigned_students.splice(project.assigned_students.indexOf(login_name), 1);
             project.save();
             student.projects.splice(student.projects.indexOf(projectId), 1);
             student.save();
@@ -297,27 +353,19 @@ app.get('/underReview/', function(request, response) {
         return;
     }
 
-    if (user.user_type !== "Admin") {
+    if (request.session.user_type !== "Admin") {
         console.log(user.login_name + " is not an admin");
         response.status(400).send(user.login_name + " is not an admin");
-        return;       
+        return;
     }
 
-    User.findOne({_id: request.session._id}, function (err, user) {
-        console.log(user)
-        if (err) {
+    Project.find({reviewed: false}, function (err, projects) {
+        if (err){
             response.status(400).send(err);
-            return;
         }
 
-        Project.find({reviewed: false}, function (err, projects) {
-            if (err){
-                response.status(400).send(err);
-            }
-
-            projects = JSON.parse(JSON.stringify(projects));
-            response.status(200).send(projects);
-        });
+        projects = JSON.parse(JSON.stringify(projects));
+        response.status(200).send(projects);
     });
 });
 
@@ -420,7 +468,7 @@ app.post('/user', function(request, response) {
 
 		// If no User with login_name exists yet and no Error, create new User
     	if (!err && user === null && login_name !== null && password !== null && first_name !== null && last_name !== null && user_type !== null) {
-    		User.create({
+            User.create({
                 user_type: user_type,
             	first_name: first_name,
             	last_name: last_name,
@@ -458,27 +506,6 @@ app.post('/user', function(request, response) {
     });
 });
 
-/*
- * Example #7 - Return the information for specified User (based on Login_Name)
- * URL Parameter instead of request variable!
- */
-app.get('/user/:login_name', function (request, response) {
-    if (request.session._id === undefined) {
-        response.status(401).send('No one logged in');
-        return;
-    }
-
-	var param = request.params.login_name;
-
-	// Search for single id and return user + relevant information
-	User.findOne({login_name: param}, 'first_name last_name', function (err, user) {
-		if (!err) {
-			response.end(JSON.stringify(user));
-		} else {
-			response.status(400).send("Error");
-		}
-	});
-});
 
 /*
  * POST request to set the reviewed status of a project
@@ -491,63 +518,55 @@ app.get('/user/:login_name', function (request, response) {
         return;
     }
 
-    User.findOne({_id: request.session._id}, function (err, user) {
-        if (err) {
-            response.status(400).send("Error");
+    if (request.session.user_type !== "Admin") {
+        console.log(user.login_name + " is not an admin");
+        response.status(400).send(user.login_name + " is not an admin");
+        return;
+    }
+    var id = request.params.id; // project id in mongo
+    var reviewed= request.body.reviewed; // rewiewed status of project
+    var contact_number = request.body.contact_number; // contact info of community member
+    var email = request.body.email;
+    var description = request.body.description;  // description of the project
+    var community_member = request.body.community_member; // community who created project
+    var tag = request.body.tag ; // tag associated with the project
+    var title = request.body.title; // title of the project
+
+    // check that all fields are filled out
+    if (email === null) {
+        response.status(400).send("Contact Info Required!");
+    } else if (contact_number === null) {
+        response.status(400).send("Contact Info Required!");
+    } else if (title === null) {
+        response.status(400).send("Title Required!");
+    } else if (community_member === null) {
+        response.status(400).send("Community Member Required!");
+    } else if (description === null) {
+        response.status(400).send("Description Required!");
+    } else if (reviewed === null) {
+        response.status(400).send("Reviewed Required!");
+    }
+
+    // find the project
+    Project.findOne({_id: id}, function (err, project) {
+        if (project === undefined) {
+            console.log("Project with _id: " + id + " not found.");
+            response.status(400).send("Project " + id + " not found");
             return;
         }
 
-        if (user.user_type !== "Admin") {
-            console.log(user.login_name + " is not an admin");
-            response.status(400).send(user.login_name + " is not an admin");
-            return;
-        }
+        // update the project
+        project.reviewed = reviewed;
+        project.contact_number = contact_number;
+        project.email = email;
+        project.tag = tag;
+        project.community_member = community_member;
+        project.description = description;
+        project.title = title;
 
-        var id = request.params.id; // project id in mongo
-        var reviewed= request.body.reviewed; // rewiewed status of project
-        var contact_number = request.body.contact_number; // contact info of community member
-        var email = request.body.email;
-        var description = request.body.description;  // description of the project
-        var community_member = request.body.community_member; // community who created project
-        var tag = request.body.tag ; // tag associated with the project
-        var title = request.body.title; // title of the project
+        project.save();
 
-        // check that all fields are filled out
-        if (email === null) {
-            response.status(400).send("Contact Info Required!");
-        } else if (contact_number === null) {
-            response.status(400).send("Contact Info Required!");
-        } else if (title === null) {
-            response.status(400).send("Title Required!");
-        } else if (community_member === null) {
-            response.status(400).send("Community Member Required!");
-        } else if (description === null) {
-            response.status(400).send("Description Required!");
-        } else if (reviewed === null) {
-            response.status(400).send("Reviewed Required!");
-        }
-
-        // find the project
-        Project.findOne({_id: id}, function (err, project) {
-            if (project === undefined) {
-                console.log("Project with _id: " + id + " not found.");
-                response.status(400).send("Project " + id + " not found");
-                return;
-            }
-
-            // update the project
-            project.reviewed = reviewed;
-            project.contact_number = contact_number;
-            project.email = email;
-            project.tag = tag;
-            project.community_member = community_member;
-            project.description = description;
-            project.title = title;
-
-            project.save();
-
-            response.status(200).send();
-        });
+        response.status(200).send();
     });
  });
 

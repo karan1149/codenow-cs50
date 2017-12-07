@@ -28,7 +28,7 @@ cs50App.config(['$routeProvider',
              }).
             when('/project/:projectId', {
                 templateUrl: 'components/project/projectTemplate.html',
-                controller: 'projectController'
+                controller: 'ProjectController'
             }).
             when('/review', {
                 templateUrl: 'components/underReview/underReviewTemplate.html',
@@ -40,7 +40,11 @@ cs50App.config(['$routeProvider',
             }).
             when('/projects/:projectId/edit', {
                 templateUrl: 'components/submit/submit.html',
-                controller: 'EditController'  
+                controller: 'EditController'
+            }).
+            when('/editUser', {
+                templateUrl: 'components/editUser/editUser.html',
+                controller: 'EditUserController'
             }).
             otherwise({
                 redirectTo: '/home'

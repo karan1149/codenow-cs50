@@ -56,3 +56,61 @@
 .like_bar {
   padding: 1% 0;
 }
+
+.removeMarginsAndPaddingInput {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.italic {
+ font-style: italic;
+}
+
+.green {
+  color: lightgreen;
+}
+
+.red {
+  color: red;
+}
+
+.orangeButton {
+    background-color: coral;
+    color:white;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-size: small;
+}
+
+.redButton {
+    background-color: #ed3123;
+    color:white;
+    margin-left: 0;
+}
+
+.blueButton {
+    background-color: #1ba8e5;
+    color:white;
+    margin-left: 0;
+}
+
+.text-center {
+  text-align: center;
+  font-weight: 500;
+}
+
+.greyButton{
+ background-color: #e0e0e0;
+ color:white;
+ margin-left: 0px;
+ margin-right: 0px;
+ font-size: small;
+}
+
+.assignments{
+  margin: 9% 0;
+}
+
+.marging-left{
+  margin-left: 3%;
+}
