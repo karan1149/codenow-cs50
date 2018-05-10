@@ -1,8 +1,3 @@
-# Instructions for using this Wireframe Web App
-This is a MEAN Stack Wireframe for CS50
-
-Use this if you want a quick jumpstart on creating a website from scratch.
-
 ## Installation Instructions:
 1. Navigate to the folder you want this to be in
 2. run the command "git init"
