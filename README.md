@@ -1,7 +1,7 @@
 ## Installation Instructions:
 1. Navigate to the folder you want this to be in
 2. run the command "git init"
-3. then run "git clone https://github.com/KevinKhieu/CS50WireframeApp.git"
+3. then run "git clone https://github.com/karan1149/codenow-cs50.git"
 4. Go into the project folder by typing "cd CS50WireframeApp" 
 5. Install node if you haven't, and run "npm i" to install dependencies
 
